@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">individuelle Werbung</string>
+    <string name="Hilfe">Kontakt</string>
+    <string name="Datenschutze">Datenschutzerklärung</string>
+    <string name="Nutzungs">Nutzungsbedingungen</string>
+    <string name="Website">Auf Website ansehen…</string>
+    <string name="Inf">Mehr Infos…</string>
+    <string name="hintergrundfarbe">Hintergrundfarbe</string>
+    <string name="safed_words">gespeicherte Wörter</string>
+    <string name="input_words">eingegebene Wörter</string>
+    <string name="infos">Infos</string>
+    <string name="nightmode">Nachtmodus</string>
+</resources>

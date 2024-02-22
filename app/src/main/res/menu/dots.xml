@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/item7" android:title="@string/infos"/>
+    <item android:id="@+id/item9" android:title="@string/input_words"/>
+    <item android:id="@+id/item11" android:title="@string/safed_words"/>
+    <item android:checkable="true" android:title="@string/nightmode" android:id="@+id/nightmode"/>
+    <item android:id="@+id/item3" android:title="@string/Hilfe"/>
+    <item android:id="@+id/item4" android:title="@string/Nutzungs"/>
+    <item android:id="@+id/item5" android:title="@string/Datenschutze"/>
+</menu>
