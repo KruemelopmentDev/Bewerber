@@ -142,10 +142,9 @@ class MainAcitivity : AppCompatActivity() {
                 saveSlogan?.visibility = View.VISIBLE
                 shareSlogan?.visibility = View.VISIBLE
                 newSlogan?.visibility = View.VISIBLE
-                val imagepath =
-                    File(getExternalFilesDir(null), sloganTextView?.text.toString() + ".png")
+                val imagepath = File(getExternalFilesDir(null), sloganTextView?.text.toString() + ".png")
                 try {
-                    if (!imagepath.createNewFile()) {
+                    if (!imagepath.exists()&&!imagepath.createNewFile()) {
                         myToast!!.showError("Teilen fehlgeschlagen!")
                         return@setOnClickListener
                     }
