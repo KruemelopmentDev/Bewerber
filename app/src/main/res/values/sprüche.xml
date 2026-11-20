@@ -27,9 +27,8 @@
         <item>_ the power to wow</item>
         <item>We love to entertain you with _</item>
         <item>Wer _ hat lebt länger</item>
-        <item>Mit _ geht es immernoch am schnellsten</item>
         <item>Frauen mit _ sind attraktiver</item>
-        <item>Jesus sagte:Nutze _ so oft wie möglich</item>
+        <item>Jesus sagte: Nutze _ so oft wie möglich</item>
         <item>Duschen ohne _ macht keinen Spaß</item>
         <item>Wenn es mehr _ gäbe, wäre Weltfrieden</item>
         <item>Männer ohne _ sind echt aufgeschmissen</item>
@@ -38,7 +37,6 @@
         <item>_ gibt es jetzt auch fertig abgepackt</item>
         <item>_ ist elektrisierend</item>
         <item>Dank _ bin ich verrückt</item>
-        <item>Mit _ geht es immernoch am schnellsten</item>
         <item>Für _ ist mir nichts zu teuer</item>
         <item>Mein Kind liebt _</item>
         <item>Make _ great again</item>
@@ -60,7 +58,7 @@
         <item>_ mit ~ schmeckt echt lecker</item>
         <item>Mit _ geht alles leichter von der Hand</item>
         <item>_ verleiht Flüüüüüüüüüügel</item>
-        <item>Von _ gibt es jetzt auch kostproben.\nMal probieren?</item>
+        <item>Von _ gibt es jetzt auch Kostproben.\nMal probieren?</item>
         <item>Eyyy wessen _ ist das?</item>
         <item>Alter gib mir sofort dein/e _</item>
         <item>Immer wenn ich an alte Zeiten denke, denke ich an _</item>
@@ -84,18 +82,18 @@
         <item>_ ist zu cool, um es zu klauen</item>
         <item>Für eine gute Party braucht man _</item>
         <item>_ ist so toll, hast du es erfunden?</item>
-        <item>_ passt nicht zu dir, denn _ ist zu krass für dich </item>
+        <item>_ passt nicht zu dir, denn _ ist zu krass für dich</item>
         <item>_ wurde in einigen Ländern sogar schon wegen Krassheit verboten</item>
         <item>Für eine erfolgreiche Therapie ist _ unbedingt notwendig</item>
         <item>_ ist mein Geheimrezept für den Sieg</item>
-        <item>Quadratisch.Praktisch._.</item>
-        <item>Ohne _,  nichts los</item>
+        <item>Quadratisch. Praktisch. _.</item>
+        <item>Ohne _, nichts los</item>
         <item>_ liebe ich mehr als alles andere</item>
         <item>Für _ sollte man eine neue Religion gründen</item>
         <item>_ ist allzeit bereit</item>
         <item>Ich komm nur mit, wenn _ auch da ist</item>
         <item>Guten Freunden gibt man ein/-e _</item>
-        <item>"_ oben. # unten.</item>
+        <item>_ oben. # unten.</item>
         <item>Immer gut, außen mit _</item>
         <item>Ich will ein/-e _ von Dir</item>
         <item>_ weckt den Tiger in Dir</item>
@@ -147,10 +145,10 @@
         <item>An schlechten Tagen hilft _</item>
         <item>Wenn es dir schlecht geht, hilft _</item>
         <item>Ich vermisse _</item>
-        <item>Ich sammel _ seit ich denken kann</item>
+        <item>Ich sammle _ seit ich denken kann</item>
         <item>Ein Hoch auf _</item>
         <item>Meine gute Figur habe ich nur dank _</item>
-        <item>Meine Erwartung an _ wurden sogar übertroffen</item>
+        <item>Meine Erwartungen an _ wurden sogar übertroffen</item>
         <item>Stiftung Warentest gibt "Sehr gut" für _</item>
         <item>Mann, ohne _ wäre mein Leben sinnlos</item>
         <item>Jeder steht auf _</item>
@@ -223,15 +221,33 @@
         <item>An meine Haut lasse ich nur Wasser und _</item>
         <item>Mein Körper gehört _</item>
         <item>_ ist besser als Sex</item>
+        <item>Selbst künstliche Intelligenz fragt erst mal _ um Rat</item>
+        <item>_ – jetzt mit 100 % mehr Vibe und 0 % Reue</item>
+        <item>Vergiss Krypto, investiere lieber in _!</item>
+        <item>9 von 10 Influencern würden für _ sogar offline gehen</item>
+        <item>_ ist mein offizielles Spirit Animal</item>
+        <item>Besser als jedes Upgrade: _ im Doppelpack mit #</item>
+        <item>Mein Therapeut sagt, ich brauche mehr _ und weniger #</item>
+        <item>_ – zertifiziert nach DIN-Norm für absolute Ehrenmänner</item>
+        <item>Wenn das Leben dir # gibt, mach einfach _ draus</item>
+        <item>Breaking News: _ löst offiziell # als Weltkulturerbe ab</item>
+        <item>Ohne _ verlasse ich nicht mal das Homeoffice</item>
+        <item>Selbst mein Smart Home bestellt heimlich _ nach</item>
+        <item>_ – der einzige Grund, warum mein Akku noch hält</item>
+        <item>Mehr _ wagen!</item>
+        <item>Auf einer Skala von 1 bis 10 ist _ mindestens eine 12</item>
+        <item>ChatGPT hat versucht, _ zu beschreiben – und ist vor Ehrfurcht abgestürzt</item>
+        <item>Kein #? Kein Problem! Hauptsache _ ist am Start</item>
+        <item>_ ist das neue Schwarz</item>
+        <item>In meinem Lebenslauf steht unter besondere Fähigkeiten einfach nur _</item>
+        <item>Wissenschaftler haben herausgefunden: _ macht 42 % glücklicher als #</item>
+        <item>Für _ stehe ich sogar vor dem ersten Klingeln des Weckers auf</item>
+        <item>_ – weil ~ gestern war</item>
+        <item>Mein Horoskop sagt heute: 100 % Chance auf _</item>
+        <item>Bevor ich mich aufrege, gönne ich mir lieber eine Portion _</item>
+        <item>_ sollte eigentlich auf Rezept erhältlich sein</item>
+        <item>Wer braucht schon ein Sixpack, wenn man _ hat?</item>
+        <item>_ – offizieller Sponsor meiner guten Laune</item>
+        <item>Sogar Außerirdische besuchen die Erde nur wegen _</item>
     </string-array>
 </resources>
-
-
-
-
-
-
-
-
-
-
