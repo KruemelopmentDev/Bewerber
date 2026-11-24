@@ -1,0 +1,9 @@
+# Captured Asset Inventory — Sprücheklopfer (Pixel 8 Pro Emulator)
+
+- `capture/assets/demo-dice-loop.mp4` — [video] 7-second real Android emulator screen recording (720×1600) in Emerald Dark Mode showing live 1-Tap Quick-Chip selection (Cola, Käse) and spinning „Neuer Spruch“ dice button generating fresh slogans with spring-pop animations.
+- `capture/assets/screen-hero-1.png` — [image] High-res Android emulator screenshot (1344×2992) of the main Sprücheklopfer screen in Emerald Dark Mode (#0E1511 / #28F078) showing the hero slogan card „Zur Nacht gönne ich mir gerne mal Käse“, #Käse pill, action buttons (Favorite, Save, Share, Speak, Copy), quick chips, and neon-green „Neuer Spruch“ button.
+- `capture/assets/screen-hero-2.png` — [image] High-res Android emulator screenshot (1344×2992) of the main Sprücheklopfer screen with „Cola“ selected and a generated Cola slogan in Emerald Dark Mode.
+- `capture/assets/screen-share-sheet.png` — [image] High-res Android emulator screenshot (1344×2992) of the „Spruch teilen & exportieren“ ModalBottomSheet featuring the square 1080×1080 Material 3 Expressive Share-Poster preview („Zur Nacht gönne ich mir gerne mal Käse“ • #Käse • Sprücheklopfer) and export buttons („Als Bild teilen“, „Als Text teilen“, „In Galerie speichern“).
+- `capture/assets/screen-catalog.png` — [image] High-res Android emulator screenshot (1344×2992) of the „Sprüche-Katalog“ (248 Vorlagen insgesamt) & „Eigene Vorlage erstellen“ card with `_` (Begriff) and `#` (Zufallswort) placeholder chips and searchable slogan list.
+- `capture/assets/widget-preview.png` — [image] Android Homescreen Glance Widget preview („Lustige Werbesprüche rund um die Uhr“) with rounded Material 3 card geometry.
+- `capture/assets/app-icon.png` — [image] Official round Sprücheklopfer launcher icon (white megaphone on #0C381D deep emerald circle).

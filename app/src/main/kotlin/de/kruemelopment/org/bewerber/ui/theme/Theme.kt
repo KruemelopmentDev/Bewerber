@@ -1,9 +1,11 @@
 package de.kruemelopment.org.bewerber.ui.theme
 
 import android.app.Activity
+import android.content.Context
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Typography
@@ -165,6 +167,41 @@ val ExpressiveTypography = Typography(
     )
 )
 
+internal const val PREFS_SETTINGS = "settings"
+internal const val KEY_THEME_MODE = "theme_mode"
+internal const val KEY_DYNAMIC_COLOR = "dynamic_color"
+internal const val KEY_LEGACY_NIGHT_MODE = "mode"
+
+internal fun readThemeSettings(context: Context): Pair<ThemeMode, Boolean> {
+    val settingsPrefs = context.getSharedPreferences(PREFS_SETTINGS, 0)
+    val savedThemeName = settingsPrefs.getString(KEY_THEME_MODE, null)
+    val themeMode = when {
+        savedThemeName != null -> runCatching { ThemeMode.valueOf(savedThemeName) }
+            .getOrDefault(ThemeMode.SYSTEM)
+        settingsPrefs.contains(KEY_LEGACY_NIGHT_MODE) -> {
+            if (settingsPrefs.getBoolean(KEY_LEGACY_NIGHT_MODE, false)) {
+                ThemeMode.DARK
+            } else {
+                ThemeMode.LIGHT
+            }
+        }
+        else -> ThemeMode.SYSTEM
+    }
+    val useDynamicColor = settingsPrefs.getBoolean(KEY_DYNAMIC_COLOR, true)
+    return Pair(themeMode, useDynamicColor)
+}
+
+internal fun resolveBewerberColorSchemes(
+    context: Context,
+    useDynamicColor: Boolean
+): Pair<ColorScheme, ColorScheme> {
+    return if (useDynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        Pair(dynamicLightColorScheme(context), dynamicDarkColorScheme(context))
+    } else {
+        Pair(BewerberLightColorScheme, BewerberDarkColorScheme)
+    }
+}
+
 @Composable
 fun BewerberTheme(
     themeMode: ThemeMode = ThemeMode.SYSTEM,
@@ -179,13 +216,8 @@ fun BewerberTheme(
     }
 
     val context = LocalContext.current
-    val colorScheme = when {
-        useDynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-        darkTheme -> BewerberDarkColorScheme
-        else -> BewerberLightColorScheme
-    }
+    val (lightScheme, darkScheme) = resolveBewerberColorSchemes(context, useDynamicColor)
+    val colorScheme = if (darkTheme) darkScheme else lightScheme
 
     val view = LocalView.current
     if (!view.isInEditMode) {

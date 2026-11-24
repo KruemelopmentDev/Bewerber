@@ -16,6 +16,11 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import androidx.core.content.edit
 import androidx.core.graphics.createBitmap
+import de.kruemelopment.org.bewerber.ui.theme.KEY_DYNAMIC_COLOR
+import de.kruemelopment.org.bewerber.ui.theme.KEY_LEGACY_NIGHT_MODE
+import de.kruemelopment.org.bewerber.ui.theme.KEY_THEME_MODE
+import de.kruemelopment.org.bewerber.ui.theme.PREFS_SETTINGS
+import de.kruemelopment.org.bewerber.ui.theme.readThemeSettings
 
 enum class ThemeMode { SYSTEM, LIGHT, DARK }
 
@@ -57,21 +62,7 @@ class BewerberViewModel(application: Application) : AndroidViewModel(application
     val uiState: StateFlow<BewerberUiState> = _uiState.asStateFlow()
 
     init {
-        val settingsPrefs = application.getSharedPreferences(PREFS_SETTINGS, 0)
-        val savedThemeName = settingsPrefs.getString(KEY_THEME_MODE, null)
-        val themeMode = when {
-            savedThemeName != null -> runCatching { ThemeMode.valueOf(savedThemeName) }
-                .getOrDefault(ThemeMode.SYSTEM)
-            settingsPrefs.contains(KEY_LEGACY_NIGHT_MODE) -> {
-                if (settingsPrefs.getBoolean(KEY_LEGACY_NIGHT_MODE, false)) {
-                    ThemeMode.DARK
-                } else {
-                    ThemeMode.LIGHT
-                }
-            }
-            else -> ThemeMode.SYSTEM
-        }
-        val useDynamicColor = settingsPrefs.getBoolean(KEY_DYNAMIC_COLOR, true)
+        val (themeMode, useDynamicColor) = readThemeSettings(application)
 
         val builtInTemplates = runCatching {
             application.resources.getStringArray(R.array.sprueche).toList().distinct()
@@ -470,6 +461,7 @@ class BewerberViewModel(application: Application) : AndroidViewModel(application
                     .putBoolean(KEY_LEGACY_NIGHT_MODE, mode == ThemeMode.DARK)
             }
         _uiState.update { it.copy(themeMode = mode) }
+        notifyWidgetsThemeChanged()
     }
 
     fun setUseDynamicColor(enabled: Boolean) {
@@ -479,6 +471,7 @@ class BewerberViewModel(application: Application) : AndroidViewModel(application
                 putBoolean(KEY_DYNAMIC_COLOR, enabled)
             }
         _uiState.update { it.copy(useDynamicColor = enabled) }
+        notifyWidgetsThemeChanged()
     }
 
     fun showStatus(message: String, isError: Boolean = false) {
@@ -554,15 +547,19 @@ class BewerberViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
+    private fun notifyWidgetsThemeChanged() {
+        viewModelScope.launch {
+            runCatching {
+                BewerberGlanceWidget.syncThemeAll(getApplication())
+            }
+        }
+    }
+
     override fun onCleared() {
         runCatching { db.close() }
     }
 
     companion object {
-        private const val PREFS_SETTINGS = "settings"
-        private const val KEY_THEME_MODE = "theme_mode"
-        private const val KEY_DYNAMIC_COLOR = "dynamic_color"
-        private const val KEY_LEGACY_NIGHT_MODE = "mode"
         private const val MAX_HISTORY_SIZE = 50
     }
 }

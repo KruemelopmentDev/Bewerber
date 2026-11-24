@@ -1,0 +1,626 @@
+<template>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@500;600&display=swap"
+  />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    #root {
+      width: 1080px;
+      height: 1920px;
+      position: relative;
+      overflow: hidden;
+      container-type: size;
+      font-family: "Barlow", sans-serif;
+      color: #dde4dd;
+    }
+
+    .f-02-app-intro-live-bg {
+      position: absolute;
+      inset: 0;
+      background: #0e1511;
+    }
+
+    .f-02-app-intro-live-grid {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .f-02-app-intro-live-vline {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: #262827;
+      opacity: 0.6;
+    }
+
+    .f-02-app-intro-live-vline-l {
+      left: 60px;
+    }
+
+    .f-02-app-intro-live-vline-c {
+      left: 540px;
+      opacity: 0.35;
+    }
+
+    .f-02-app-intro-live-vline-r {
+      right: 60px;
+    }
+
+    .f-02-app-intro-live-hline {
+      position: absolute;
+      left: 60px;
+      right: 60px;
+      height: 1px;
+      background: #262827;
+      opacity: 0.7;
+    }
+
+    .f-02-app-intro-live-hline-1 {
+      top: 148px;
+    }
+
+    .f-02-app-intro-live-hline-2 {
+      top: 472px;
+    }
+
+    .f-02-app-intro-live-hline-3 {
+      top: 1580px;
+      opacity: 0.35;
+    }
+
+    .f-02-app-intro-live-stage {
+      position: absolute;
+      inset: 0;
+    }
+
+    /* Upper header row: y = 64px .. 128px */
+    .f-02-app-intro-live-header {
+      position: absolute;
+      top: 64px;
+      left: 60px;
+      right: 60px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .f-02-app-intro-live-brand {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .f-02-app-intro-live-icon-wrap {
+      width: 56px;
+      height: 56px;
+      border: 1px solid #262827;
+      background: #181a19;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .f-02-app-intro-live-icon {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .f-02-app-intro-live-kicker-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .f-02-app-intro-live-stub {
+      width: 36px;
+      height: 2px;
+      background: #28f078;
+      transform-origin: left center;
+    }
+
+    .f-02-app-intro-live-kicker {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #28f078;
+      line-height: 1;
+    }
+
+    .f-02-app-intro-live-meta {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #48504b;
+      line-height: 1;
+    }
+
+    /* Sequencer progress hairline along y = 148px */
+    .f-02-app-intro-live-seq-track {
+      position: absolute;
+      top: 147px;
+      left: 60px;
+      width: 960px;
+      height: 2px;
+      overflow: hidden;
+    }
+
+    .f-02-app-intro-live-seq-fill {
+      width: 100%;
+      height: 100%;
+      background: #28f078;
+      transform-origin: left center;
+    }
+
+    /* Massive lowercase Barlow 900 display headline: y = 172px .. 376px */
+    .f-02-app-intro-live-headline {
+      position: absolute;
+      top: 172px;
+      left: 60px;
+      width: 840px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .f-02-app-intro-live-line {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      font-family: "Barlow", sans-serif;
+      font-size: 112px;
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      text-transform: lowercase;
+      color: #dde4dd;
+    }
+
+    .f-02-app-intro-live-word {
+      display: inline-block;
+      will-change: transform, opacity;
+    }
+
+    .f-02-app-intro-live-accent {
+      color: #28f078;
+    }
+
+    /* Scene 3 callout strip + progress fill + rhythm bars: y = 398px .. 454px */
+    .f-02-app-intro-live-callout {
+      position: absolute;
+      top: 398px;
+      left: 60px;
+      right: 60px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .f-02-app-intro-live-pill-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      height: 44px;
+      padding: 0 18px;
+      background: #28f078;
+      flex-shrink: 0;
+      will-change: clip-path;
+    }
+
+    .f-02-app-intro-live-pill-text {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #0e1511;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .f-02-app-intro-live-bar-track {
+      flex: 1;
+      height: 8px;
+      background: #181a19;
+      border: 1px solid #262827;
+      overflow: hidden;
+    }
+
+    .f-02-app-intro-live-bar-fill {
+      width: 100%;
+      height: 100%;
+      background: #28f078;
+      transform-origin: left center;
+      will-change: transform;
+    }
+
+    .f-02-app-intro-live-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      height: 36px;
+      padding-left: 12px;
+      border-left: 1px solid #262827;
+      flex-shrink: 0;
+    }
+
+    .f-02-app-intro-live-vbar {
+      width: 8px;
+      background: #48504b;
+      transform-origin: bottom center;
+      will-change: transform;
+    }
+
+    .f-02-app-intro-live-vbar-accent {
+      background: #28f078;
+    }
+
+    /* Scene 2 hero phone device: centered, y = 492px .. 1564px (within 83% keep-out <= 1593px) */
+    .f-02-app-intro-live-device {
+      position: absolute;
+      top: 492px;
+      left: 292px;
+      width: 496px;
+      height: 1072px;
+      border: 1px solid #28f078;
+      background: #0e1511;
+      padding: 10px;
+      transform-origin: 50% 50%;
+      will-change: transform, opacity;
+    }
+
+    .f-02-app-intro-live-screen {
+      position: relative;
+      width: 474px;
+      height: 1050px;
+      overflow: hidden;
+      background: #0e1511;
+      border: 1px solid #262827;
+    }
+
+    .f-02-app-intro-live-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Minimal hairline corner registration marks on device bezel */
+    .f-02-app-intro-live-corner {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      pointer-events: none;
+    }
+
+    .f-02-app-intro-live-corner-tl {
+      top: -1px;
+      left: -1px;
+      border-top: 2px solid #28f078;
+      border-left: 2px solid #28f078;
+    }
+
+    .f-02-app-intro-live-corner-tr {
+      top: -1px;
+      right: -1px;
+      border-top: 2px solid #28f078;
+      border-right: 2px solid #28f078;
+    }
+
+    .f-02-app-intro-live-corner-bl {
+      bottom: -1px;
+      left: -1px;
+      border-bottom: 2px solid #28f078;
+      border-left: 2px solid #28f078;
+    }
+
+    .f-02-app-intro-live-corner-br {
+      bottom: -1px;
+      right: -1px;
+      border-bottom: 2px solid #28f078;
+      border-right: 2px solid #28f078;
+    }
+  </style>
+
+  <div
+    id="root"
+    data-composition-id="02-app-intro-live"
+    data-start="0"
+    data-duration="7"
+    data-width="1080"
+    data-height="1920"
+  >
+    <!-- Track 0: Full-bleed dark ground -->
+    <div
+      id="02-app-intro-live-bg"
+      class="clip f-02-app-intro-live-bg"
+      data-start="0"
+      data-duration="7"
+      data-track-index="0"
+    ></div>
+
+    <!-- Track 1: Subtle 1px Broadside grid lines -->
+    <div
+      id="02-app-intro-live-grid"
+      class="clip f-02-app-intro-live-grid"
+      data-start="0"
+      data-duration="7"
+      data-track-index="1"
+    >
+      <div class="f-02-app-intro-live-vline f-02-app-intro-live-vline-l"></div>
+      <div class="f-02-app-intro-live-vline f-02-app-intro-live-vline-c"></div>
+      <div class="f-02-app-intro-live-vline f-02-app-intro-live-vline-r"></div>
+      <div class="f-02-app-intro-live-hline f-02-app-intro-live-hline-1"></div>
+      <div class="f-02-app-intro-live-hline f-02-app-intro-live-hline-2"></div>
+      <div class="f-02-app-intro-live-hline f-02-app-intro-live-hline-3"></div>
+    </div>
+
+    <!-- Track 2: Main stage (header, statement, callout, hero device) -->
+    <div
+      id="02-app-intro-live-stage"
+      class="clip f-02-app-intro-live-stage"
+      data-start="0"
+      data-duration="7"
+      data-track-index="2"
+    >
+      <!-- Scene 1: Top mono kicker + app icon -->
+      <div id="02-app-intro-live-header" class="f-02-app-intro-live-header">
+        <div class="f-02-app-intro-live-brand">
+          <div id="02-app-intro-live-icon-wrap" class="f-02-app-intro-live-icon-wrap">
+            <img
+              class="f-02-app-intro-live-icon"
+              src="assets/app-icon.png"
+              alt="Sprücheklopfer App Icon"
+            />
+          </div>
+          <div class="f-02-app-intro-live-kicker-group">
+            <div id="02-app-intro-live-stub" class="f-02-app-intro-live-stub"></div>
+            <div id="02-app-intro-live-kicker" class="f-02-app-intro-live-kicker">
+              02 / SPRÜCHEKLOPFER
+            </div>
+          </div>
+        </div>
+        <div id="02-app-intro-live-meta" class="f-02-app-intro-live-meta">LIVE UI</div>
+      </div>
+
+      <!-- Scene 1 sequencer progress hairline -->
+      <div class="f-02-app-intro-live-seq-track">
+        <div id="02-app-intro-live-seq-fill" class="f-02-app-intro-live-seq-fill"></div>
+      </div>
+
+      <!-- Scene 1: Massive lowercase Barlow 900 headline -->
+      <div id="02-app-intro-live-headline" class="f-02-app-intro-live-headline">
+        <div class="f-02-app-intro-live-line">
+          <span id="02-app-intro-live-w0" class="f-02-app-intro-live-word">ein</span>
+          <span id="02-app-intro-live-w1" class="f-02-app-intro-live-word">wort.</span>
+        </div>
+        <div class="f-02-app-intro-live-line">
+          <span
+            id="02-app-intro-live-w2"
+            class="f-02-app-intro-live-word f-02-app-intro-live-accent"
+            >ein</span
+          >
+          <span
+            id="02-app-intro-live-w3"
+            class="f-02-app-intro-live-word f-02-app-intro-live-accent"
+            >tap.</span
+          >
+        </div>
+      </div>
+
+      <!-- Scene 3: Neon-emerald 1-TAP QUICK-CHIPS callout strip + accent fill + bars -->
+      <div id="02-app-intro-live-callout" class="f-02-app-intro-live-callout">
+        <div id="02-app-intro-live-pill" class="f-02-app-intro-live-pill-wrap">
+          <span class="f-02-app-intro-live-pill-text">1-TAP QUICK-CHIPS</span>
+        </div>
+        <div class="f-02-app-intro-live-bar-track">
+          <div id="02-app-intro-live-bar-fill" class="f-02-app-intro-live-bar-fill"></div>
+        </div>
+        <div class="f-02-app-intro-live-bars">
+          <div class="f-02-app-intro-live-vbar" style="height: 14px"></div>
+          <div class="f-02-app-intro-live-vbar" style="height: 22px"></div>
+          <div class="f-02-app-intro-live-vbar" style="height: 18px"></div>
+          <div class="f-02-app-intro-live-vbar" style="height: 28px"></div>
+          <div
+            class="f-02-app-intro-live-vbar f-02-app-intro-live-vbar-accent"
+            style="height: 36px"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Scene 2: Hero phone device with live demo-dice-loop.mp4 -->
+      <div id="02-app-intro-live-device" class="f-02-app-intro-live-device">
+        <div class="f-02-app-intro-live-corner f-02-app-intro-live-corner-tl"></div>
+        <div class="f-02-app-intro-live-corner f-02-app-intro-live-corner-tr"></div>
+        <div class="f-02-app-intro-live-corner f-02-app-intro-live-corner-bl"></div>
+        <div class="f-02-app-intro-live-corner f-02-app-intro-live-corner-br"></div>
+        <div class="f-02-app-intro-live-screen">
+          <img id="02-app-intro-live-f1" class="f-02-app-intro-live-video" src="assets/demo-frame-1.png" alt="Sprücheklopfer Live Demo 1" />
+          <img id="02-app-intro-live-f2" class="f-02-app-intro-live-video" src="assets/demo-frame-2.png" alt="Sprücheklopfer Live Demo 2" />
+          <img id="02-app-intro-live-f3" class="f-02-app-intro-live-video" src="assets/demo-frame-3.png" alt="Sprücheklopfer Live Demo 3" />
+          <img id="02-app-intro-live-f4" class="f-02-app-intro-live-video" src="assets/demo-frame-4.png" alt="Sprücheklopfer Live Demo 4" />
+          <img id="02-app-intro-live-f5" class="f-02-app-intro-live-video" src="assets/demo-frame-5.png" alt="Sprücheklopfer Live Demo 5" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      const root =
+        document.querySelector('[data-composition-id="02-app-intro-live"]') || document;
+      const byId = (id) => root.querySelector('[id="' + id + '"]');
+
+      const tl = gsap.timeline({ paused: true });
+
+      // Ensure full 6.5s span is registered deterministically
+      tl.to({}, { duration: 6.5 }, 0);
+
+      // ============================================================
+      // SCENE 1 (0.0–1.8s): Top kicker + app icon + dynamic-content-sequencing
+      // per-word staggered reveal of "ein wort. ein tap."
+      // ============================================================
+      tl.fromTo(
+        byId("02-app-intro-live-icon-wrap"),
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.4, ease: "power3.out" },
+        0.04
+      );
+
+      tl.fromTo(
+        byId("02-app-intro-live-stub"),
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.35, ease: "power3.out" },
+        0.08
+      );
+
+      tl.fromTo(
+        byId("02-app-intro-live-kicker"),
+        { opacity: 0, x: -16 },
+        { opacity: 1, x: 0, duration: 0.38, ease: "power3.out" },
+        0.1
+      );
+
+      tl.fromTo(
+        byId("02-app-intro-live-meta"),
+        { opacity: 0 },
+        { opacity: 1, duration: 0.35, ease: "power2.out" },
+        0.18
+      );
+
+      // Pre-compute content-length-driven word timeline ONCE at build time
+      // (dynamic-content-sequencing rule)
+      const WORDS = [
+        { id: "02-app-intro-live-w0", text: "ein", hold: 0.12, meta: "01 / INPUT" },
+        { id: "02-app-intro-live-w1", text: "wort.", hold: 0.18, meta: "02 / WORT" },
+        { id: "02-app-intro-live-w2", text: "ein", hold: 0.12, meta: "03 / ACTION" },
+        { id: "02-app-intro-live-w3", text: "tap.", hold: 0.22, meta: "LIVE UI" },
+      ];
+
+      const BASE_DUR = 0.12;
+      const SEC_PER_CHAR = 0.04;
+      let cursor = 0.08;
+      const WORD_TIMELINE = WORDS.map((entry) => {
+        const dur = BASE_DUR + entry.text.length * SEC_PER_CHAR + entry.hold;
+        const start = cursor;
+        cursor += dur;
+        return { ...entry, start, end: cursor };
+      });
+      const SEQ_END = cursor;
+
+      WORD_TIMELINE.forEach((entry) => {
+        tl.fromTo(
+          byId(entry.id),
+          { opacity: 0, y: 28 },
+          { opacity: 1, y: 0, duration: 0.42, ease: "power3.out" },
+          entry.start
+        );
+      });
+
+      function entryAt(time) {
+        for (let i = WORD_TIMELINE.length - 1; i >= 0; i--) {
+          if (time >= WORD_TIMELINE[i].start) return WORD_TIMELINE[i];
+        }
+        return WORD_TIMELINE[0];
+      }
+
+      const metaEl = byId("02-app-intro-live-meta");
+      const seqFillEl = byId("02-app-intro-live-seq-fill");
+      const seqDriver = { t: 0 };
+      let lastMeta = "";
+
+      tl.fromTo(
+        seqFillEl,
+        { scaleX: 0 },
+        { scaleX: 1, duration: SEQ_END, ease: "none" },
+        0
+      );
+
+      tl.to(
+        seqDriver,
+        {
+          t: SEQ_END,
+          duration: SEQ_END,
+          ease: "none",
+          onUpdate: () => {
+            const active = entryAt(seqDriver.t);
+            if (active.meta !== lastMeta) {
+              metaEl.textContent = active.meta;
+              lastMeta = active.meta;
+            }
+          },
+        },
+        0
+      );
+
+      // ============================================================
+      // SCENE 2 (1.8–4.4s): Hero phone device spring-pop entrance
+      // (spring-pop-entrance rule: smooth power3.out settle, no overshoot)
+      // ============================================================
+      tl.fromTo(
+        byId("02-app-intro-live-device"),
+        { scale: 0, opacity: 0, y: 32 },
+        { scale: 1, opacity: 1, y: 0, duration: 0.65, ease: "power3.out" },
+        1.8
+      );
+
+      // Step through real emulator recording frames on the beat
+      tl.set(byId("02-app-intro-live-f1"), { opacity: 1 }, 0);
+      tl.set([byId("02-app-intro-live-f2"), byId("02-app-intro-live-f3"), byId("02-app-intro-live-f4"), byId("02-app-intro-live-f5")], { opacity: 0 }, 0);
+      tl.fromTo(byId("02-app-intro-live-f2"), { opacity: 0 }, { opacity: 1, duration: 0.14, ease: "power2.out" }, 2.7);
+      tl.fromTo(byId("02-app-intro-live-f3"), { opacity: 0 }, { opacity: 1, duration: 0.14, ease: "power2.out" }, 3.6);
+      tl.fromTo(byId("02-app-intro-live-f4"), { opacity: 0 }, { opacity: 1, duration: 0.14, ease: "power2.out" }, 4.5);
+      tl.fromTo(byId("02-app-intro-live-f5"), { opacity: 0 }, { opacity: 1, duration: 0.14, ease: "power2.out" }, 5.4);
+
+      // ============================================================
+      // SCENE 3 (4.4–6.5s): Neon-emerald 1-TAP QUICK-CHIPS callout strip
+      // + progress fill + growth bars (stat-bars-and-fills rule)
+      // ============================================================
+      tl.fromTo(
+        byId("02-app-intro-live-pill"),
+        { clipPath: "inset(0 100% 0 0)" },
+        { clipPath: "inset(0 0% 0 0)", duration: 0.75, ease: "power2.out" },
+        4.4
+      );
+
+      tl.fromTo(
+        byId("02-app-intro-live-bar-fill"),
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.9, ease: "power2.out" },
+        4.45
+      );
+
+      const vbars = root.querySelectorAll(".f-02-app-intro-live-vbar");
+      tl.fromTo(
+        vbars,
+        { scaleY: 0 },
+        { scaleY: 1, duration: 0.65, ease: "power3.out", stagger: 0.07 },
+        4.55
+      );
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["02-app-intro-live"] = tl;
+      tl.seek(0);
+    })();
+  </script>
+</template>

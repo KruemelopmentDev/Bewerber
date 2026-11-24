@@ -1,0 +1,519 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "Barlow";
+      font-style: normal;
+      font-weight: 400;
+      font-display: block;
+      src: url("https://cdn.jsdelivr.net/npm/@fontsource/barlow/files/barlow-latin-400-normal.woff2")
+        format("woff2");
+    }
+    @font-face {
+      font-family: "Barlow";
+      font-style: normal;
+      font-weight: 700;
+      font-display: block;
+      src: url("https://cdn.jsdelivr.net/npm/@fontsource/barlow/files/barlow-latin-700-normal.woff2")
+        format("woff2");
+    }
+    @font-face {
+      font-family: "Barlow";
+      font-style: normal;
+      font-weight: 900;
+      font-display: block;
+      src: url("https://cdn.jsdelivr.net/npm/@fontsource/barlow/files/barlow-latin-900-normal.woff2")
+        format("woff2");
+    }
+    @font-face {
+      font-family: "IBM Plex Mono";
+      font-style: normal;
+      font-weight: 500;
+      font-display: block;
+      src: url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2")
+        format("woff2");
+    }
+
+    #root {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      container-type: size;
+      font-family: "Barlow", sans-serif;
+      color: #dde4dd;
+      box-sizing: border-box;
+    }
+
+    #root *,
+    #root *::before,
+    #root *::after {
+      box-sizing: border-box;
+    }
+
+    #f03-248-sprueche-bg {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      background: #0e1511;
+    }
+
+    #f03-248-sprueche-stage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1080px;
+      height: 1590px;
+      padding: 60px 60px 24px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    /* Top Broadside chrome bar */
+    .f03-248-sprueche-chrome {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #262827;
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 1.55cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #48504b;
+    }
+
+    .f03-248-sprueche-chrome-accent {
+      color: #28f078;
+    }
+
+    /* Scene 1: Top-border stat card (upper third) */
+    .f03-248-sprueche-stat-card {
+      width: 100%;
+      margin-top: 28px;
+      padding-top: 28px;
+      padding-bottom: 24px;
+      border-top: 1px solid #262827;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .f03-248-sprueche-kicker-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .f03-248-sprueche-stub-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .f03-248-sprueche-stub {
+      width: 36px;
+      height: 2px;
+      background: #28f078;
+      transform-origin: left center;
+    }
+
+    .f03-248-sprueche-kicker {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 1.55cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #28f078;
+    }
+
+    .f03-248-sprueche-counter-wrap {
+      width: 100%;
+      height: 240px;
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+    }
+
+    .f03-248-sprueche-counter {
+      font-family: "Barlow", sans-serif;
+      font-weight: 900;
+      font-size: 23.5cqw;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      color: #28f078;
+      font-variant-numeric: tabular-nums;
+      display: inline-block;
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    .f03-248-sprueche-counter-suffix {
+      font-family: "Barlow", sans-serif;
+      font-weight: 900;
+      font-size: 20cqw;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      color: #28f078;
+      display: inline-block;
+      margin-left: 6px;
+      will-change: transform, opacity;
+    }
+
+    .f03-248-sprueche-counter-label {
+      margin-top: 18px;
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 2.05cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #dde4dd;
+      text-align: center;
+      will-change: transform, opacity;
+    }
+
+    /* Scene 2a: Hairline divider + center-outward quick-word tags */
+    .f03-248-sprueche-divider-band {
+      position: relative;
+      width: 100%;
+      height: 92px;
+      margin-top: 12px;
+    }
+
+    .f03-248-sprueche-hairline {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 1px;
+      background: #262827;
+      transform-origin: center center;
+    }
+
+    .f03-248-sprueche-burst-wrap {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+    }
+
+    .f03-248-sprueche-tag {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      padding: 13px 28px;
+      border: 1px solid #262827;
+      background: #0e1511;
+      color: #dde4dd;
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 2.15cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      will-change: transform, opacity;
+    }
+
+    .f03-248-sprueche-tag-active {
+      background: #28f078;
+      border-color: #28f078;
+      color: #0e1511;
+    }
+
+    /* Scene 2b: Real emulator screenshot focal zone */
+    .f03-248-sprueche-focal-zone {
+      width: 100%;
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .f03-248-sprueche-screen-card {
+      position: relative;
+      width: 590px;
+      height: 800px;
+      background: #181a19;
+      border: 1px solid #262827;
+      overflow: hidden;
+      transform-origin: 50% 50%;
+      will-change: transform, opacity;
+    }
+
+    .f03-248-sprueche-screen-img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 11.8%;
+    }
+
+    /* Scene 3: Full-width accent rule sweep + footer meta */
+    .f03-248-sprueche-bottom-zone {
+      width: 100%;
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .f03-248-sprueche-rule-track {
+      width: 100%;
+      height: 6px;
+      background: #262827;
+      overflow: hidden;
+    }
+
+    .f03-248-sprueche-rule-fill {
+      width: 100%;
+      height: 100%;
+      background: #28f078;
+      transform-origin: left center;
+      will-change: transform;
+    }
+
+    .f03-248-sprueche-footer-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 1.5cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #48504b;
+      will-change: transform, opacity;
+    }
+
+    .f03-248-sprueche-footer-highlight {
+      color: #dde4dd;
+    }
+  </style>
+
+  <div
+    id="root"
+    data-composition-id="03-248-sprueche"
+    data-start="0"
+    data-duration="5.5"
+    data-width="1080"
+    data-height="1920"
+  >
+    <div
+      id="f03-248-sprueche-bg"
+      class="clip"
+      data-start="0"
+      data-duration="5.5"
+      data-track-index="0"
+    ></div>
+
+    <div
+      id="f03-248-sprueche-stage"
+      class="clip"
+      data-start="0"
+      data-duration="5.5"
+      data-track-index="1"
+    >
+      <div id="f03-248-sprueche-chrome" class="f03-248-sprueche-chrome">
+        <span>03 / VORLAGEN-KATALOG</span>
+        <span class="f03-248-sprueche-chrome-accent">1-TAP ENGINE</span>
+      </div>
+
+      <section id="f03-248-sprueche-stat-card" class="f03-248-sprueche-stat-card">
+        <div class="f03-248-sprueche-kicker-row">
+          <div class="f03-248-sprueche-stub-wrap">
+            <div id="f03-248-sprueche-stub" class="f03-248-sprueche-stub"></div>
+            <span class="f03-248-sprueche-kicker">SPRÜCHE-ARCHIV</span>
+          </div>
+          <span class="f03-248-sprueche-kicker">NO. 03</span>
+        </div>
+
+        <div class="f03-248-sprueche-counter-wrap">
+          <span id="f03-248-sprueche-counter" class="f03-248-sprueche-counter">0</span>
+          <span id="f03-248-sprueche-counter-suffix" class="f03-248-sprueche-counter-suffix">+</span>
+        </div>
+
+        <div id="f03-248-sprueche-counter-label" class="f03-248-sprueche-counter-label">
+          FERTIGE WERBESPRÜCHE &bull; 0 % SERIOSITÄT
+        </div>
+      </section>
+
+      <div class="f03-248-sprueche-divider-band">
+        <div id="f03-248-sprueche-hairline" class="f03-248-sprueche-hairline"></div>
+        <div class="f03-248-sprueche-burst-wrap">
+          <div
+            class="f03-248-sprueche-tag f03-248-sprueche-tag-active"
+            data-target-x="-300"
+            data-target-y="0"
+          >
+            #KÄSE
+          </div>
+          <div class="f03-248-sprueche-tag" data-target-x="0" data-target-y="0">
+            #COLA
+          </div>
+          <div class="f03-248-sprueche-tag" data-target-x="300" data-target-y="0">
+            #DÖNER
+          </div>
+        </div>
+      </div>
+
+      <div class="f03-248-sprueche-focal-zone">
+        <div id="f03-248-sprueche-screen-card" class="f03-248-sprueche-screen-card">
+          <img
+            class="f03-248-sprueche-screen-img"
+            src="assets/screen-hero-1.png"
+            alt="Sprücheklopfer Hauptscreen mit Käse-Werbespruch"
+          />
+        </div>
+      </div>
+
+      <div class="f03-248-sprueche-bottom-zone">
+        <div class="f03-248-sprueche-rule-track">
+          <div id="f03-248-sprueche-rule-fill" class="f03-248-sprueche-rule-fill"></div>
+        </div>
+        <div id="f03-248-sprueche-footer-row" class="f03-248-sprueche-footer-row">
+          <span>ENDLOSE KOMBINATIONEN PER 1-TAP</span>
+          <span class="f03-248-sprueche-footer-highlight">248+ VORLAGEN</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <script>
+    (function () {
+      const root = document.querySelector('[data-composition-id="03-248-sprueche"]');
+      if (!root) return;
+
+      const tl = gsap.timeline({ paused: true });
+
+      const chrome = root.querySelector("#f03-248-sprueche-chrome");
+      const stub = root.querySelector("#f03-248-sprueche-stub");
+      const counter = root.querySelector("#f03-248-sprueche-counter");
+      const counterSuffix = root.querySelector("#f03-248-sprueche-counter-suffix");
+      const counterLabel = root.querySelector("#f03-248-sprueche-counter-label");
+      const hairline = root.querySelector("#f03-248-sprueche-hairline");
+      const tags = root.querySelectorAll(".f03-248-sprueche-tag");
+      const screenCard = root.querySelector("#f03-248-sprueche-screen-card");
+      const ruleFill = root.querySelector("#f03-248-sprueche-rule-fill");
+      const footerRow = root.querySelector("#f03-248-sprueche-footer-row");
+
+      // Scene 1 (0.0–1.8s): Top chrome + value-scaled count-up 0 -> 248 + suffix + mono label
+      tl.fromTo(
+        chrome,
+        { opacity: 0, y: -10 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" },
+        0.0
+      );
+
+      tl.fromTo(
+        stub,
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.4, ease: "power3.out" },
+        0.05
+      );
+
+      const countState = { value: 0 };
+      const COUNT_START = 0.05;
+      const COUNT_DUR = 1.4;
+      const START_SCALE = 0.52;
+
+      tl.to(
+        countState,
+        {
+          value: 248,
+          duration: COUNT_DUR,
+          ease: "power3.out",
+          onUpdate: () => {
+            counter.textContent = String(Math.round(countState.value));
+          },
+        },
+        COUNT_START
+      );
+
+      tl.fromTo(
+        counter,
+        { scale: START_SCALE, opacity: 0.2 },
+        { scale: 1, opacity: 1, duration: COUNT_DUR, ease: "power3.out" },
+        COUNT_START
+      );
+
+      // Label arrives before the count peaks (counting-dynamic-scale rule)
+      tl.fromTo(
+        counterLabel,
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" },
+        0.4
+      );
+
+      // Suffix "+" slides in AFTER the count completes
+      tl.fromTo(
+        counterSuffix,
+        { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "back.out(1.6)" },
+        COUNT_START + COUNT_DUR
+      );
+
+      // Scene 2 (1.8–3.8s): Real screenshot spring-pop entrance + center-outward tag expansion
+      tl.fromTo(
+        screenCard,
+        { scale: 0, opacity: 0, y: 24 },
+        { scale: 1, opacity: 1, y: 0, duration: 0.68, ease: "power3.out" },
+        1.8
+      );
+
+      tl.fromTo(
+        hairline,
+        { scaleX: 0, opacity: 0 },
+        { scaleX: 1, opacity: 1, duration: 0.45, ease: "power3.out" },
+        1.92
+      );
+
+      tags.forEach((el, i) => {
+        tl.fromTo(
+          el,
+          { xPercent: -50, yPercent: -50, x: 0, y: 0, scale: 0.6, opacity: 0 },
+          {
+            xPercent: -50,
+            yPercent: -50,
+            x: Number(el.dataset.targetX),
+            y: Number(el.dataset.targetY),
+            scale: 1,
+            opacity: 1,
+            duration: 1.05,
+            ease: "power3.out",
+          },
+          2.05 + i * 0.06
+        );
+      });
+
+      // Scene 3 (3.8–5.0s): Full-width accent rule sweep (stat-bars-and-fills) + sharp hold
+      tl.fromTo(
+        ruleFill,
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.85, ease: "power2.out" },
+        3.8
+      );
+
+      tl.fromTo(
+        footerRow,
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
+        3.95
+      );
+
+      // Ensure full 5.0s timeline duration for seek determinism
+      tl.set({}, {}, 5.0);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["03-248-sprueche"] = tl;
+      tl.seek(0);
+    })();
+  </script>
+</template>

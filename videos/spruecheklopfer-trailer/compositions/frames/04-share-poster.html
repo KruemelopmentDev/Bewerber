@@ -1,0 +1,642 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <style>
+    @font-face {
+      font-family: "Barlow";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url("https://cdn.jsdelivr.net/npm/@fontsource/barlow@5.1.1/files/barlow-latin-400-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Barlow";
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url("https://cdn.jsdelivr.net/npm/@fontsource/barlow@5.1.1/files/barlow-latin-700-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Barlow";
+      font-style: normal;
+      font-weight: 800;
+      font-display: swap;
+      src: url("https://cdn.jsdelivr.net/npm/@fontsource/barlow@5.1.1/files/barlow-latin-800-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Barlow";
+      font-style: normal;
+      font-weight: 900;
+      font-display: swap;
+      src: url("https://cdn.jsdelivr.net/npm/@fontsource/barlow@5.1.1/files/barlow-latin-900-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "IBM Plex Mono";
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.1.1/files/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "IBM Plex Mono";
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.1.1/files/ibm-plex-mono-latin-700-normal.woff2") format("woff2");
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    #root {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      container-type: size;
+      font-family: "Barlow", sans-serif;
+      color: #DDE4DD;
+    }
+
+    /* Full-bleed ground rides on a dedicated clip layer, never on #root */
+    [id="04-share-poster-bg"] {
+      position: absolute;
+      inset: 0;
+      background-color: #0E1511;
+      z-index: 0;
+    }
+
+    /* Subtle flat 1px architectural hairline chrome (Broadside) */
+    [id="04-share-poster-chrome"] {
+      position: absolute;
+      top: 52px;
+      left: 5.5cqw;
+      right: 5.5cqw;
+      height: 44px;
+      border-bottom: 1px solid #262827;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 1.85cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #48504B;
+      z-index: 10;
+    }
+
+    [id="04-share-poster-chrome-num"] {
+      color: #DDE4DD;
+    }
+
+    /* Scene 1 header block: top-left anchored, Barlow lowercase 900 + IBM Plex Mono kicker */
+    [id="04-share-poster-header"] {
+      position: absolute;
+      top: 122px;
+      left: 5.5cqw;
+      width: 89cqw;
+      z-index: 12;
+    }
+
+    [id="04-share-poster-kicker-row"] {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    [id="04-share-poster-rule-stub"] {
+      width: 36px;
+      height: 2px;
+      background-color: #28F078;
+      flex-shrink: 0;
+      transform-origin: left center;
+    }
+
+    [id="04-share-poster-kicker"] {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 2.1cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #28F078;
+      display: flex;
+      gap: 0.45em;
+    }
+
+    [id="04-share-poster-headline"] {
+      font-family: "Barlow", sans-serif;
+      font-weight: 900;
+      font-size: 8.6cqw;
+      line-height: 0.92;
+      letter-spacing: -0.035em;
+      text-transform: lowercase;
+      color: #DDE4DD;
+      max-width: 78cqw;
+    }
+
+    [id="04-share-poster-headline"] span[data-word] {
+      display: inline-block;
+      margin-right: 0.22em;
+    }
+
+    [id="04-share-poster-headline"] span[data-accent="true"] {
+      color: #28F078;
+    }
+
+    /* Main visual stage — Asymmetric 3-layer depth layout */
+    [id="04-share-poster-stage"] {
+      position: absolute;
+      top: 372px;
+      left: 0;
+      width: 1080px;
+      height: 920px;
+      z-index: 8;
+    }
+
+    /* Flat 1px architectural frame crosshairs behind phones */
+    [id="04-share-poster-grid-v"] {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 5.5cqw;
+      width: 1px;
+      background-color: #262827;
+      z-index: 1;
+    }
+
+    [id="04-share-poster-grid-h"] {
+      position: absolute;
+      left: 5.5cqw;
+      right: 5.5cqw;
+      top: 50%;
+      height: 1px;
+      background-color: #262827;
+      z-index: 1;
+    }
+
+    /* Shared swap wrapper — same footprint, transform-origin 50% 50% */
+    [id="04-share-poster-swap-wrap"] {
+      position: absolute;
+      top: 8px;
+      left: 325px;
+      width: 430px;
+      height: 904px;
+      z-index: 4;
+    }
+
+    /* Depth Layer 1: Supporting screen (screen-hero-2.png) */
+    [id="04-share-poster-hero2-card"] {
+      position: absolute;
+      inset: 0;
+      background-color: #181A19;
+      border: 1px solid #262827;
+      border-radius: 0;
+      padding: 8px;
+      transform-origin: 50% 50%;
+      z-index: 2;
+    }
+
+    /* Depth Layer 2: Focal cutout (screen-share-sheet.png), z-index strictly above outgoing */
+    [id="04-share-poster-share-card"] {
+      position: absolute;
+      inset: 0;
+      background-color: #0E1511;
+      border: 1px solid #28F078;
+      border-radius: 0;
+      padding: 8px;
+      transform-origin: 50% 50%;
+      z-index: 5;
+    }
+
+    [id="04-share-poster-hero2-img"],
+    [id="04-share-poster-share-img"] {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      background-color: #0E1511;
+    }
+
+    /* Depth Layer 3: Foreground architectural spec badge (1080x1080) */
+    [id="04-share-poster-spec-badge"] {
+      position: absolute;
+      top: 56px;
+      right: 5.5cqw;
+      width: 286px;
+      background-color: #0E1511;
+      border: 1px solid #28F078;
+      border-radius: 0;
+      padding: 18px 20px;
+      z-index: 9;
+      transform-origin: left center;
+    }
+
+    [id="04-share-poster-spec-kicker"] {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 1.65cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #28F078;
+      margin-bottom: 6px;
+    }
+
+    [id="04-share-poster-spec-value"] {
+      font-family: "Barlow", sans-serif;
+      font-weight: 900;
+      font-size: 3.9cqw;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: #DDE4DD;
+    }
+
+    [id="04-share-poster-spec-sub"] {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 1.5cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #48504B;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid #262827;
+    }
+
+    /* Scene 3: Export pills strip — strictly above y = 1593px (83% keep-out) */
+    [id="04-share-poster-pills-wrap"] {
+      position: absolute;
+      top: 1338px;
+      left: 5.5cqw;
+      right: 5.5cqw;
+      z-index: 12;
+    }
+
+    [id="04-share-poster-pills-rule"] {
+      width: 100%;
+      height: 1px;
+      background-color: #262827;
+      margin-bottom: 24px;
+      transform-origin: left center;
+    }
+
+    [id="04-share-poster-pills-row"] {
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    [id="04-share-poster-pills-row"] div[data-pill] {
+      position: relative;
+      flex: 0 1 auto;
+      background-color: #181A19;
+      border: 1px solid #262827;
+      border-radius: 0;
+      padding: 22px 24px;
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 700;
+      font-size: 2.05cqw;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #DDE4DD;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    [id="04-share-poster-pills-row"] div[data-pill="primary"] {
+      border-color: #28F078;
+      background-color: #0E1511;
+    }
+
+    [id="04-share-poster-pills-row"] span[data-slash] {
+      color: #28F078;
+      font-weight: 700;
+    }
+
+    [id="04-share-poster-pill-bar"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background-color: #28F078;
+      transform-origin: left center;
+    }
+  </style>
+
+  <div
+    id="root"
+    data-composition-id="04-share-poster"
+    data-start="0"
+    data-duration="6.5"
+    data-width="1080"
+    data-height="1920"
+  >
+    <!-- Track 0: Dedicated full-bleed background clip -->
+    <div
+      id="04-share-poster-bg"
+      class="clip"
+      data-start="0"
+      data-duration="6.5"
+      data-track-index="0"
+    ></div>
+
+    <!-- Track 1: Broadside top hairline chrome -->
+    <div
+      id="04-share-poster-chrome"
+      class="clip"
+      data-start="0"
+      data-duration="6.5"
+      data-track-index="1"
+    >
+      <span>SHARE-POSTER EXPORT</span>
+      <span id="04-share-poster-chrome-num">04 / 07</span>
+    </div>
+
+    <!-- Track 2: Kicker + lowercase Barlow 900 headline -->
+    <div
+      id="04-share-poster-header"
+      class="clip"
+      data-start="0"
+      data-duration="6.5"
+      data-track-index="2"
+    >
+      <div id="04-share-poster-kicker-row">
+        <div id="04-share-poster-rule-stub"></div>
+        <div id="04-share-poster-kicker">
+          <span id="04-share-poster-kw-0">04</span>
+          <span id="04-share-poster-kw-1">/</span>
+          <span id="04-share-poster-kw-2">SHARE-POSTER</span>
+        </div>
+      </div>
+      <h1 id="04-share-poster-headline">
+        <span id="04-share-poster-hw-0" data-word="0">„als</span><span id="04-share-poster-hw-1" data-word="1" data-accent="true">poster</span><br /><span id="04-share-poster-hw-2" data-word="2">teilen.“</span>
+      </h1>
+    </div>
+
+    <!-- Track 3: Asymmetric 3-layer visual stage -->
+    <div
+      id="04-share-poster-stage"
+      class="clip"
+      data-start="0"
+      data-duration="6.5"
+      data-track-index="3"
+    >
+      <div id="04-share-poster-grid-v"></div>
+      <div id="04-share-poster-grid-h"></div>
+
+      <div id="04-share-poster-swap-wrap">
+        <!-- Depth Layer 1: Supporting Cola hero screen -->
+        <div id="04-share-poster-hero2-card">
+          <img
+            id="04-share-poster-hero2-img"
+            src="assets/screen-hero-2.png"
+            alt="Sprücheklopfer Cola Spruch Ansicht"
+          />
+        </div>
+
+        <!-- Depth Layer 2: Focal Share-Poster BottomSheet cutout -->
+        <div id="04-share-poster-share-card">
+          <img
+            id="04-share-poster-share-img"
+            src="assets/screen-share-sheet.png"
+            alt="Material 3 Expressive Share-Poster Vorschau"
+          />
+        </div>
+      </div>
+
+      <!-- Depth Layer 3: Foreground architectural spec badge -->
+      <div id="04-share-poster-spec-badge">
+        <div id="04-share-poster-spec-kicker">/ FORMAT</div>
+        <div id="04-share-poster-spec-value">1080×1080</div>
+        <div id="04-share-poster-spec-sub">1-TAP POSTER</div>
+      </div>
+    </div>
+
+    <!-- Track 4: Three mono export pills (Scene 3) -->
+    <div
+      id="04-share-poster-pills-wrap"
+      class="clip"
+      data-start="4.0"
+      data-duration="2.5"
+      data-track-index="4"
+    >
+      <div id="04-share-poster-pills-rule"></div>
+      <div id="04-share-poster-pills-row">
+        <div id="04-share-poster-pill-0" data-pill="primary">
+          <div id="04-share-poster-pill-bar"></div>
+          <span data-slash>/</span><span>ALS BILD</span>
+        </div>
+        <div id="04-share-poster-pill-1" data-pill="secondary">
+          <span data-slash>/</span><span>ALS TEXT</span>
+        </div>
+        <div id="04-share-poster-pill-2" data-pill="secondary">
+          <span data-slash>/</span><span>GALERIE 1080×1080</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DURATION = 6.0;
+      var tl = gsap.timeline({ paused: true });
+
+      var chromeEl = document.getElementById("04-share-poster-chrome");
+      var ruleStubEl = document.getElementById("04-share-poster-rule-stub");
+      var kickerWords = [
+        document.getElementById("04-share-poster-kw-0"),
+        document.getElementById("04-share-poster-kw-1"),
+        document.getElementById("04-share-poster-kw-2"),
+      ];
+      var headlineWords = [
+        { el: document.getElementById("04-share-poster-hw-0"), text: "„als" },
+        { el: document.getElementById("04-share-poster-hw-1"), text: "poster" },
+        { el: document.getElementById("04-share-poster-hw-2"), text: "teilen.“" },
+      ];
+      var hero2Card = document.getElementById("04-share-poster-hero2-card");
+      var shareCard = document.getElementById("04-share-poster-share-card");
+      var specBadge = document.getElementById("04-share-poster-spec-badge");
+      var pillsRule = document.getElementById("04-share-poster-pills-rule");
+      var pillBar = document.getElementById("04-share-poster-pill-bar");
+      var exportPills = [
+        { el: document.getElementById("04-share-poster-pill-0"), text: "/ ALS BILD" },
+        { el: document.getElementById("04-share-poster-pill-1"), text: "/ ALS TEXT" },
+        { el: document.getElementById("04-share-poster-pill-2"), text: "/ GALERIE 1080×1080" },
+      ];
+
+      // Pre-compute content-length-aware stagger offsets ONCE at build time (dynamic-content-sequencing)
+      var SEC_PER_CHAR_HEADLINE = 0.022;
+      var headCursor = 0.14;
+      var HEADLINE_SEQ = headlineWords.map(function (item) {
+        var start = headCursor;
+        headCursor += 0.09 + item.text.length * SEC_PER_CHAR_HEADLINE;
+        return { el: item.el, start: start };
+      });
+
+      var SEC_PER_CHAR_PILL = 0.012;
+      var pillCursor = 4.22;
+      var PILL_SEQ = exportPills.map(function (item) {
+        var start = pillCursor;
+        pillCursor += 0.16 + item.text.length * SEC_PER_CHAR_PILL;
+        return { el: item.el, start: start };
+      });
+
+      // --- SCENE 1 (0.0–1.8s): Dark register, kicker + headline stagger, screen-hero-2 anchored center-below ---
+      tl.fromTo(
+        chromeEl,
+        { opacity: 0, y: -12 },
+        { opacity: 1, y: 0, duration: 0.32, ease: "power3.out" },
+        0.0
+      );
+
+      tl.fromTo(
+        ruleStubEl,
+        { scaleX: 0, opacity: 0 },
+        { scaleX: 1, opacity: 1, duration: 0.28, ease: "power3.out" },
+        0.04
+      );
+
+      kickerWords.forEach(function (kw, idx) {
+        tl.fromTo(
+          kw,
+          { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 0.26, ease: "power3.out" },
+          0.08 + idx * 0.07
+        );
+      });
+
+      HEADLINE_SEQ.forEach(function (entry) {
+        tl.fromTo(
+          entry.el,
+          { opacity: 0, y: 28 },
+          { opacity: 1, y: 0, duration: 0.42, ease: "power3.out" },
+          entry.start
+        );
+      });
+
+      // screen-hero-2 visible well before t = 0.5s
+      tl.fromTo(
+        hero2Card,
+        { opacity: 0, y: 36, scale: 0.94, x: 0 },
+        { opacity: 1, y: 0, scale: 1.0, x: 0, duration: 0.48, ease: "power3.out" },
+        0.02
+      );
+
+      // Subtle gated breath during Scene 1 hold (0.6s–1.75s)
+      tl.to(
+        hero2Card,
+        { y: -8, duration: 0.58, ease: "sine.inOut" },
+        0.6
+      );
+      tl.to(
+        hero2Card,
+        { y: 0, duration: 0.55, ease: "sine.inOut" },
+        1.18
+      );
+
+      // Keep Scene 2 & Scene 3 elements cleanly parked before their triggers
+      tl.set(shareCard, { opacity: 0, scale: 0.72, x: 48, y: 14 }, 0);
+      tl.set(specBadge, { opacity: 0, x: 24, scaleX: 0.88 }, 0);
+      tl.set(pillsRule, { scaleX: 0, opacity: 0 }, 0);
+      tl.set(pillBar, { scaleX: 0 }, 0);
+      PILL_SEQ.forEach(function (entry) {
+        tl.set(entry.el, { opacity: 0, y: 22, scale: 0.95 }, 0);
+      });
+
+      // --- SCENE 2 (1.8–4.2s): Hero pivot aside + scale-swap-transition into screen-share-sheet.png (3 depth layers) ---
+      var TRIGGER = 1.8;
+      var EXIT_DUR = 0.45;
+      var OVERLAP = 0.16;
+      var ENTER_DUR = 0.62;
+      var BOUNCE_FACTOR = 1.65;
+
+      // Depth Layer 1: screen-hero-2 pivots left & recedes into background layer (power2.in)
+      tl.to(
+        hero2Card,
+        {
+          x: -225,
+          y: 26,
+          scale: 0.78,
+          opacity: 0.34,
+          duration: EXIT_DUR,
+          ease: "power2.in",
+        },
+        TRIGGER
+      );
+
+      // Depth Layer 2: screen-share-sheet pops in as center hero via scale-swap-transition (back.out)
+      tl.fromTo(
+        shareCard,
+        { scale: 0.72, opacity: 0, x: 48, y: 14 },
+        {
+          scale: 1.0,
+          opacity: 1,
+          x: 42,
+          y: 0,
+          duration: ENTER_DUR,
+          ease: "back.out(" + BOUNCE_FACTOR + ")",
+        },
+        TRIGGER + EXIT_DUR - OVERLAP
+      );
+
+      // Depth Layer 3: Foreground 1080x1080 spec badge reveals after container settles (SUB_REVEAL_DELAY)
+      tl.fromTo(
+        specBadge,
+        { opacity: 0, x: 24, scaleX: 0.88 },
+        { opacity: 1, x: 0, scaleX: 1, duration: 0.4, ease: "power3.out" },
+        TRIGGER + EXIT_DUR + 0.38
+      );
+
+      // Subtle gated settle breath on hero share sheet (3.1s–4.1s, lands crisp at poster 4.0s)
+      tl.to(
+        shareCard,
+        { y: -5, duration: 0.48, ease: "sine.inOut" },
+        3.1
+      );
+      tl.to(
+        shareCard,
+        { y: 0, duration: 0.42, ease: "sine.inOut" },
+        3.58
+      );
+
+      // --- SCENE 3 (4.2–6.0s): Three crisp mono export pills stagger in and hold still ---
+      tl.fromTo(
+        pillsRule,
+        { scaleX: 0, opacity: 0 },
+        { scaleX: 1, opacity: 1, duration: 0.35, ease: "power3.out" },
+        4.05
+      );
+
+      PILL_SEQ.forEach(function (entry) {
+        tl.fromTo(
+          entry.el,
+          { opacity: 0, y: 22, scale: 0.95 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.36, ease: "power3.out" },
+          entry.start
+        );
+      });
+
+      // Top accent bar snaps across primary export pill (/ ALS BILD)
+      tl.fromTo(
+        pillBar,
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.34, ease: "power3.out" },
+        4.38
+      );
+
+      // Full-duration anchor (no exit tween — non-final frame)
+      tl.to({}, { duration: DURATION }, 0);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["04-share-poster"] = tl;
+      tl.seek(0);
+    })();
+  </script>
+</template>

@@ -1,0 +1,24 @@
+Sprücheklopfer — Lustige Werbesprüche für jedes Wort (Android App im Google Play Store, von Krümelopment Dev)
+
+Kern-Loop:
+Gib ein beliebiges Wort ein oder tippe auf einen 1-Tap Quick-Chip (Cola, Käse, Döner, Feierabend, Krümelopment Dev) und drücke auf den Würfel-Button „Neuer Spruch“.
+Sofort generiert Sprücheklopfer aus 248 eingebauten Vorlagen einen absurden, witzigen Werbespruch.
+
+Highlights:
+1. 248+ Werbesprüche, Würfel-Button & 1-Tap Quick-Chips
+   - Beispiele aus sprueche.xml:
+     - „Zur Nacht gönne ich mir gerne mal Käse“
+     - „Quadratisch. Praktisch. Käse.“
+     - „20% auf alles außer Feierabend“
+     - „Duschen ohne Döner macht keinen Spaß“
+     - „Alltag raus. Cola rein.“
+     - „Für Käse sollte man eine neue Religion gründen“
+2. 1080×1080 Share-Poster im Material 3 Expressive Design
+   - Direkt als Bild (PNG-Poster) oder Text in WhatsApp/Gruppenchats teilen oder in der Galerie speichern.
+3. Sprüche-Katalog & Eigene Vorlagen
+   - Alle 248 Vorlagen durchsuchen und eigene Vorlagen mit Platzhaltern (_ für deinen Begriff, # für ein zufälliges Zusatzwort) erstellen.
+4. Homescreen-Widget mit 1-Tap-Refresh & Dynamic Colors
+   - Jeden Tag ein neuer Werbespruch direkt auf dem Android-Homescreen, aktualisierbar mit einem Tipp.
+5. Material 3 Expressive Design (Bewerber Emerald Dark Mode #0E1511 / #28F078 & Dynamic Color), Vorlesefunktion (TTS), Favoriten & Swipe-Verlauf.
+
+CTA: Jetzt kostenlos im Google Play Store holen — Sprücheklopfer.

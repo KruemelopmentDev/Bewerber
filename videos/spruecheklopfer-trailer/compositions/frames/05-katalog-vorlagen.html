@@ -1,0 +1,753 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <style>
+    @font-face {
+      font-family: "Barlow";
+      font-style: normal;
+      font-weight: 400;
+      font-display: block;
+      src: url("https://cdn.jsdelivr.net/npm/@fontsource/barlow@5.1.1/files/barlow-latin-400-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Barlow";
+      font-style: normal;
+      font-weight: 700;
+      font-display: block;
+      src: url("https://cdn.jsdelivr.net/npm/@fontsource/barlow@5.1.1/files/barlow-latin-700-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Barlow";
+      font-style: normal;
+      font-weight: 800;
+      font-display: block;
+      src: url("https://cdn.jsdelivr.net/npm/@fontsource/barlow@5.1.1/files/barlow-latin-800-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Barlow";
+      font-style: normal;
+      font-weight: 900;
+      font-display: block;
+      src: url("https://cdn.jsdelivr.net/npm/@fontsource/barlow@5.1.1/files/barlow-latin-900-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "IBM Plex Mono";
+      font-style: normal;
+      font-weight: 500;
+      font-display: block;
+      src: url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.1.1/files/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "IBM Plex Mono";
+      font-style: normal;
+      font-weight: 700;
+      font-display: block;
+      src: url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.1.1/files/ibm-plex-mono-latin-700-normal.woff2") format("woff2");
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    #root {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      container-type: size;
+      font-family: "Barlow", sans-serif;
+      color: #DDE4DD;
+    }
+
+    /* Track 0: Dedicated full-bleed dark register ground (never on #root) */
+    [id="05-katalog-vorlagen-bg"] {
+      position: absolute;
+      inset: 0;
+      background-color: #0E1511;
+      z-index: 0;
+    }
+
+    /* Track 1: Broadside top 1px hairline chrome */
+    [id="05-katalog-vorlagen-chrome"] {
+      position: absolute;
+      top: 52px;
+      left: 5.5cqw;
+      right: 5.5cqw;
+      height: 44px;
+      border-bottom: 1px solid #262827;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 1.85cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #48504B;
+      z-index: 10;
+    }
+
+    [id="05-katalog-vorlagen-chrome-num"] {
+      color: #DDE4DD;
+    }
+
+    /* Track 2: Scene 1 header block (kicker + lowercase Barlow 900 headline) */
+    [id="05-katalog-vorlagen-header"] {
+      position: absolute;
+      top: 120px;
+      left: 5.5cqw;
+      width: 89cqw;
+      z-index: 12;
+    }
+
+    [id="05-katalog-vorlagen-kicker-row"] {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    [id="05-katalog-vorlagen-rule-stub"] {
+      width: 36px;
+      height: 2px;
+      background-color: #28F078;
+      flex-shrink: 0;
+      transform-origin: left center;
+    }
+
+    [id="05-katalog-vorlagen-kicker"] {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 2.1cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #28F078;
+      display: flex;
+      gap: 0.45em;
+    }
+
+    [id="05-katalog-vorlagen-headline"] {
+      font-family: "Barlow", sans-serif;
+      font-weight: 900;
+      font-size: 8.2cqw;
+      line-height: 0.92;
+      letter-spacing: -0.035em;
+      text-transform: lowercase;
+      color: #DDE4DD;
+      max-width: 82cqw;
+    }
+
+    [id="05-katalog-vorlagen-headline"] span[data-word] {
+      display: inline-block;
+      margin-right: 0.22em;
+      will-change: transform, opacity;
+    }
+
+    [id="05-katalog-vorlagen-headline"] span[data-accent="true"] {
+      color: #28F078;
+    }
+
+    /* Track 3: Scene 2A — Two sharp hairline formula cards (center-outward-expansion) */
+    [id="05-katalog-vorlagen-cards-wrap"] {
+      position: absolute;
+      top: 382px;
+      left: 59px;
+      width: 962px;
+      height: 178px;
+      z-index: 10;
+    }
+
+    [id="05-katalog-vorlagen-card-left"] {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 468px;
+      height: 176px;
+      background-color: #181A19;
+      border: 1px solid #262827;
+      border-top: 2px solid #28F078;
+      border-radius: 0;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      will-change: transform, opacity;
+    }
+
+    [id="05-katalog-vorlagen-card-right"] {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 468px;
+      height: 176px;
+      background-color: #181A19;
+      border: 1px solid #262827;
+      border-top: 2px solid #28F078;
+      border-radius: 0;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      will-change: transform, opacity;
+    }
+
+    [id="05-katalog-vorlagen-token-left"],
+    [id="05-katalog-vorlagen-token-right"] {
+      width: 84px;
+      height: 84px;
+      flex-shrink: 0;
+      border: 1px solid #28F078;
+      background-color: #0E1511;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Barlow", sans-serif;
+      font-weight: 900;
+      font-size: 5.4cqw;
+      line-height: 1;
+      color: #28F078;
+    }
+
+    [id="05-katalog-vorlagen-meta-left"],
+    [id="05-katalog-vorlagen-meta-right"] {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    [id="05-katalog-vorlagen-chip-left"],
+    [id="05-katalog-vorlagen-chip-right"] {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 700;
+      font-size: 1.95cqw;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #28F078;
+      white-space: nowrap;
+    }
+
+    [id="05-katalog-vorlagen-desc-left"],
+    [id="05-katalog-vorlagen-desc-right"] {
+      font-family: "Barlow", sans-serif;
+      font-weight: 700;
+      font-size: 2.8cqw;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      text-transform: lowercase;
+      color: #DDE4DD;
+    }
+
+    [id="05-katalog-vorlagen-sub-left"],
+    [id="05-katalog-vorlagen-sub-right"] {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 1.45cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #48504B;
+    }
+
+    /* Track 4: Scene 2B — Real screen-catalog.png rising cleanly underneath (spring-pop-entrance) */
+    [id="05-katalog-vorlagen-screen-stage"] {
+      position: absolute;
+      top: 586px;
+      left: 59px;
+      width: 962px;
+      height: 784px;
+      z-index: 8;
+    }
+
+    [id="05-katalog-vorlagen-grid-h"] {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background-color: #262827;
+      z-index: 1;
+    }
+
+    [id="05-katalog-vorlagen-grid-v"] {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      background-color: #262827;
+      z-index: 1;
+    }
+
+    [id="05-katalog-vorlagen-screen-card"] {
+      position: relative;
+      width: 616px;
+      height: 784px;
+      margin: 0 auto;
+      background-color: #181A19;
+      border: 1px solid #28F078;
+      border-radius: 0;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      transform-origin: 50% 50%;
+      will-change: transform, opacity;
+      z-index: 4;
+    }
+
+    [id="05-katalog-vorlagen-screen-bar"] {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-bottom: 1px solid #262827;
+      background-color: #0E1511;
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 1.55cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #48504B;
+      flex-shrink: 0;
+    }
+
+    [id="05-katalog-vorlagen-screen-bar-accent"] {
+      color: #28F078;
+    }
+
+    [id="05-katalog-vorlagen-screen-viewport"] {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      overflow: hidden;
+      background-color: #0E1511;
+    }
+
+    [id="05-katalog-vorlagen-screen-img"] {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 11%;
+    }
+
+    /* Track 5: Scene 3 — Example formula bar with asr-keyword-glow (y: 1396..1554, strictly <= 1593px) */
+    [id="05-katalog-vorlagen-formula-wrap"] {
+      position: absolute;
+      top: 1396px;
+      left: 59px;
+      width: 962px;
+      height: 158px;
+      background-color: #181A19;
+      border: 1px solid #262827;
+      border-left: 3px solid #28F078;
+      border-radius: 0;
+      padding: 22px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+      z-index: 12;
+      will-change: transform, opacity;
+    }
+
+    [id="05-katalog-vorlagen-formula-kicker"] {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 1.65cqw;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #48504B;
+    }
+
+    [id="05-katalog-vorlagen-formula-kicker-slash"] {
+      color: #28F078;
+      margin-right: 8px;
+    }
+
+    [id="05-katalog-vorlagen-formula-phrase"] {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.24em;
+      font-family: "Barlow", sans-serif;
+      font-weight: 800;
+      font-size: 4.15cqw;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      text-transform: lowercase;
+      color: #48504B;
+    }
+
+    [id="05-katalog-vorlagen-formula-phrase"] span[data-word] {
+      display: inline-block;
+      transform-origin: 50% 50%;
+      text-shadow: 0 0 0 rgba(40, 240, 120, 0);
+      will-change: transform;
+    }
+
+    [id="05-katalog-vorlagen-formula-phrase"] span[data-brand="true"] {
+      font-weight: 900;
+      padding: 0 6px;
+      color: #28F078;
+    }
+  </style>
+
+  <div
+    id="root"
+    data-composition-id="05-katalog-vorlagen"
+    data-start="0"
+    data-duration="6.1"
+    data-width="1080"
+    data-height="1920"
+  >
+    <!-- Track 0: Full-bleed dark register ground -->
+    <div
+      id="05-katalog-vorlagen-bg"
+      class="clip"
+      data-start="0"
+      data-duration="6.1"
+      data-track-index="0"
+    ></div>
+
+    <!-- Track 1: Broadside top 1px hairline chrome -->
+    <div
+      id="05-katalog-vorlagen-chrome"
+      class="clip"
+      data-start="0"
+      data-duration="6.1"
+      data-track-index="1"
+    >
+      <span>EIGENE VORLAGEN</span>
+      <span id="05-katalog-vorlagen-chrome-num">05 / 07</span>
+    </div>
+
+    <!-- Track 2: Scene 1 — Mono kicker + lowercase Barlow 900 headline -->
+    <div
+      id="05-katalog-vorlagen-header"
+      class="clip"
+      data-start="0"
+      data-duration="6.1"
+      data-track-index="2"
+    >
+      <div id="05-katalog-vorlagen-kicker-row">
+        <div id="05-katalog-vorlagen-rule-stub"></div>
+        <div id="05-katalog-vorlagen-kicker">
+          <span id="05-katalog-vorlagen-kw-0">05</span>
+          <span id="05-katalog-vorlagen-kw-1">/</span>
+          <span id="05-katalog-vorlagen-kw-2">EIGENE</span>
+          <span id="05-katalog-vorlagen-kw-3">VORLAGEN</span>
+        </div>
+      </div>
+      <h1 id="05-katalog-vorlagen-headline">
+        <span id="05-katalog-vorlagen-hw-0" data-word="0">„bau</span><span id="05-katalog-vorlagen-hw-1" data-word="1">deine</span><br /><span id="05-katalog-vorlagen-hw-2" data-word="2" data-accent="true">eigenen</span><span id="05-katalog-vorlagen-hw-3" data-word="3">sprüche.“</span>
+      </h1>
+    </div>
+
+    <!-- Track 3: Scene 2A — Two sharp hairline formula cards (center-outward-expansion) -->
+    <div
+      id="05-katalog-vorlagen-cards-wrap"
+      class="clip"
+      data-start="1.6"
+      data-duration="4.5"
+      data-track-index="3"
+    >
+      <div
+        id="05-katalog-vorlagen-card-left"
+        data-burst="true"
+        data-target-x="-247"
+        data-target-y="0"
+      >
+        <div id="05-katalog-vorlagen-token-left">_</div>
+        <div id="05-katalog-vorlagen-meta-left">
+          <div id="05-katalog-vorlagen-chip-left">+ _ BEGRIFF</div>
+          <div id="05-katalog-vorlagen-desc-left">dein begriff</div>
+          <div id="05-katalog-vorlagen-sub-left">PLATZHALTER 01</div>
+        </div>
+      </div>
+
+      <div
+        id="05-katalog-vorlagen-card-right"
+        data-burst="true"
+        data-target-x="247"
+        data-target-y="0"
+      >
+        <div id="05-katalog-vorlagen-token-right">#</div>
+        <div id="05-katalog-vorlagen-meta-right">
+          <div id="05-katalog-vorlagen-chip-right">+ # ZUFALLSWORT</div>
+          <div id="05-katalog-vorlagen-desc-right">zufallswort</div>
+          <div id="05-katalog-vorlagen-sub-right">PLATZHALTER 02</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Track 4: Scene 2B — Real screen-catalog.png hero screen (spring-pop-entrance) -->
+    <div
+      id="05-katalog-vorlagen-screen-stage"
+      class="clip"
+      data-start="2.2"
+      data-duration="3.9"
+      data-track-index="4"
+    >
+      <div id="05-katalog-vorlagen-grid-h"></div>
+      <div id="05-katalog-vorlagen-grid-v"></div>
+      <div id="05-katalog-vorlagen-screen-card">
+        <div id="05-katalog-vorlagen-screen-bar">
+          <span>SPRÜCHE-KATALOG</span>
+          <span id="05-katalog-vorlagen-screen-bar-accent">248 VORLAGEN</span>
+        </div>
+        <div id="05-katalog-vorlagen-screen-viewport">
+          <img
+            id="05-katalog-vorlagen-screen-img"
+            src="assets/screen-catalog.png"
+            alt="Sprücheklopfer Katalog und Eigene Vorlagen"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Track 5: Scene 3 — Live example formula bar (asr-keyword-glow) -->
+    <div
+      id="05-katalog-vorlagen-formula-wrap"
+      class="clip"
+      data-start="3.8"
+      data-duration="2.3"
+      data-track-index="5"
+    >
+      <div id="05-katalog-vorlagen-formula-kicker">
+        <span id="05-katalog-vorlagen-formula-kicker-slash">/</span>LIVE-BEISPIEL
+      </div>
+      <div id="05-katalog-vorlagen-formula-phrase">
+        <span data-word="w0">„ohne</span>
+        <span data-word="w1" data-brand="true">_</span>
+        <span data-word="w2">ist</span>
+        <span data-word="w3" data-brand="true">#</span>
+        <span data-word="w4">nur</span>
+        <span data-word="w5">halb</span>
+        <span data-word="w6">so</span>
+        <span data-word="w7">gut!“</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DURATION = 5.5;
+      var tl = gsap.timeline({ paused: true });
+
+      var chromeEl = document.getElementById("05-katalog-vorlagen-chrome");
+      var ruleStubEl = document.getElementById("05-katalog-vorlagen-rule-stub");
+      var kickerWords = [
+        document.getElementById("05-katalog-vorlagen-kw-0"),
+        document.getElementById("05-katalog-vorlagen-kw-1"),
+        document.getElementById("05-katalog-vorlagen-kw-2"),
+        document.getElementById("05-katalog-vorlagen-kw-3"),
+      ];
+      var headlineWords = [
+        { el: document.getElementById("05-katalog-vorlagen-hw-0"), text: "„bau" },
+        { el: document.getElementById("05-katalog-vorlagen-hw-1"), text: "deine" },
+        { el: document.getElementById("05-katalog-vorlagen-hw-2"), text: "eigenen" },
+        { el: document.getElementById("05-katalog-vorlagen-hw-3"), text: "sprüche.“" },
+      ];
+      var burstCards = [
+        document.getElementById("05-katalog-vorlagen-card-left"),
+        document.getElementById("05-katalog-vorlagen-card-right"),
+      ];
+      var screenCard = document.getElementById("05-katalog-vorlagen-screen-card");
+      var gridH = document.getElementById("05-katalog-vorlagen-grid-h");
+      var gridV = document.getElementById("05-katalog-vorlagen-grid-v");
+      var formulaWrap = document.getElementById("05-katalog-vorlagen-formula-wrap");
+      var formulaWords = document.querySelectorAll(
+        '[id="05-katalog-vorlagen-formula-phrase"] span[data-word]'
+      );
+
+      // --- SCENE 1 (0.0–1.6s): Content-length-aware per-word staggered reveal (dynamic-content-sequencing) ---
+      var SEC_PER_CHAR = 0.024;
+      var headCursor = 0.14;
+      var HEADLINE_SEQ = headlineWords.map(function (item) {
+        var start = headCursor;
+        headCursor += 0.1 + item.text.length * SEC_PER_CHAR;
+        return { el: item.el, start: start };
+      });
+
+      tl.fromTo(
+        chromeEl,
+        { opacity: 0, y: -12 },
+        { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" },
+        0.0
+      );
+
+      tl.fromTo(
+        ruleStubEl,
+        { scaleX: 0, opacity: 0 },
+        { scaleX: 1, opacity: 1, duration: 0.28, ease: "power3.out" },
+        0.04
+      );
+
+      kickerWords.forEach(function (kw, idx) {
+        tl.fromTo(
+          kw,
+          { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 0.26, ease: "power3.out" },
+          0.08 + idx * 0.06
+        );
+      });
+
+      // Hero headline visible well before t = 0.5s
+      HEADLINE_SEQ.forEach(function (entry) {
+        tl.fromTo(
+          entry.el,
+          { opacity: 0, y: 28 },
+          { opacity: 1, y: 0, duration: 0.44, ease: "power3.out" },
+          entry.start
+        );
+      });
+
+      // --- SCENE 2A (1.6–2.4s): Cluster->outward expansion (center-outward-expansion) ---
+      var BURST_ENTRY_AT = 1.6;
+      var EXPAND_DUR = 0.72;
+      var BURST_STAGGER = 0.08;
+
+      burstCards.forEach(function (el, i) {
+        tl.fromTo(
+          el,
+          { xPercent: -50, yPercent: -50, x: 0, y: 0, scale: 0.6, opacity: 0 },
+          {
+            xPercent: -50,
+            yPercent: -50,
+            x: Number(el.dataset.targetX),
+            y: Number(el.dataset.targetY),
+            scale: 1,
+            opacity: 1,
+            duration: EXPAND_DUR,
+            ease: "power3.out",
+          },
+          BURST_ENTRY_AT + i * BURST_STAGGER
+        );
+      });
+
+      // --- SCENE 2B (2.25–3.8s): Real screen-catalog.png rising cleanly underneath (spring-pop-entrance) ---
+      tl.fromTo(
+        gridH,
+        { scaleX: 0, opacity: 0 },
+        { scaleX: 1, opacity: 1, duration: 0.45, ease: "power3.out" },
+        2.22
+      );
+      tl.fromTo(
+        gridV,
+        { scaleY: 0, opacity: 0 },
+        { scaleY: 1, opacity: 1, duration: 0.45, ease: "power3.out" },
+        2.26
+      );
+
+      // Canonical spring-pop-entrance: smooth long-tail power3.out settle, no overshoot
+      tl.fromTo(
+        screenCard,
+        { scale: 0.84, y: 30, opacity: 0 },
+        { scale: 1, y: 0, opacity: 1, duration: 0.68, ease: "power3.out" },
+        2.28
+      );
+
+      // Gentle breathing float on settled screen (3.1s–3.75s, crisp at poster 3.5s)
+      tl.to(
+        screenCard,
+        { y: -4, duration: 0.35, ease: "sine.inOut" },
+        3.1
+      );
+      tl.to(
+        screenCard,
+        { y: 0, duration: 0.3, ease: "sine.inOut" },
+        3.45
+      );
+
+      // --- SCENE 3 (3.8–5.5s): Example formula bar with asr-keyword-glow ---
+      tl.fromTo(
+        formulaWrap,
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.34, ease: "power3.out" },
+        3.8
+      );
+
+      // Monotonic, non-overlapping timings; _ and # get >2x window
+      var TIMINGS = {
+        w0: { start: 3.92, end: 4.05 },
+        w1: { start: 4.07, end: 4.37 },
+        w2: { start: 4.39, end: 4.51 },
+        w3: { start: 4.53, end: 4.83 },
+        w4: { start: 4.85, end: 4.95 },
+        w5: { start: 4.97, end: 5.07 },
+        w6: { start: 5.09, end: 5.19 },
+        w7: { start: 5.21, end: 5.34 },
+      };
+
+      var ATTACK_DUR = 0.08;
+      var RELEASE = 0.22;
+      var REST_LEVEL_NORMAL = 0.72;
+      var REST_LEVEL_BRAND = 0.82;
+      var MAX_BLUR_NORMAL = 14;
+      var MAX_BLUR_BRAND = 34;
+      var MAX_SCALE_NORMAL = 0.06;
+      var MAX_SCALE_BRAND = 0.2;
+
+      var REST_RGB = { r: 72, g: 80, b: 75 };     // #48504B
+      var ACTIVE_RGB = { r: 221, g: 228, b: 221 }; // #DDE4DD
+      var BRAND_RGB = { r: 40, g: 240, b: 120 };   // #28F078
+
+      function lerpChannel(a, b, t) {
+        return Math.round(a + (b - a) * t);
+      }
+
+      function envelope(time, start, end, restLevel) {
+        if (time < start) return 0;
+        if (time < end) return Math.min((time - start) / ATTACK_DUR, 1);
+        var releaseEnd = end + RELEASE;
+        if (time < releaseEnd) {
+          return 1 - ((time - end) / RELEASE) * (1 - restLevel);
+        }
+        return restLevel;
+      }
+
+      var driver = { t: 0 };
+      tl.to(
+        driver,
+        {
+          t: DURATION,
+          duration: DURATION,
+          ease: "none",
+          onUpdate: function () {
+            formulaWords.forEach(function (el) {
+              var timing = TIMINGS[el.dataset.word];
+              if (!timing) return;
+              var isBrand = el.dataset.brand === "true";
+              var restLevel = isBrand ? REST_LEVEL_BRAND : REST_LEVEL_NORMAL;
+              var env = envelope(driver.t, timing.start, timing.end, restLevel);
+              var target = isBrand ? BRAND_RGB : ACTIVE_RGB;
+              var r = lerpChannel(REST_RGB.r, target.r, env);
+              var g = lerpChannel(REST_RGB.g, target.g, env);
+              var b = lerpChannel(REST_RGB.b, target.b, env);
+              el.style.color = "rgb(" + r + ", " + g + ", " + b + ")";
+
+              var maxBlur = isBrand ? MAX_BLUR_BRAND : MAX_BLUR_NORMAL;
+              var glowAlpha = isBrand ? (0.85 * env).toFixed(3) : (0.25 * env).toFixed(3);
+              var glowColor = isBrand
+                ? "rgba(40, 240, 120, " + glowAlpha + ")"
+                : "rgba(221, 228, 221, " + glowAlpha + ")";
+              el.style.textShadow = "0 0 " + (maxBlur * env).toFixed(1) + "px " + glowColor;
+
+              var maxScale = isBrand ? MAX_SCALE_BRAND : MAX_SCALE_NORMAL;
+              el.style.transform = "scale(" + (1 + maxScale * env).toFixed(4) + ")";
+            });
+          },
+        },
+        0
+      );
+
+      // Full-span anchor (non-final frame — no exit tween)
+      tl.to({}, { duration: DURATION }, 0);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["05-katalog-vorlagen"] = tl;
+      tl.seek(0);
+    })();
+  </script>
+</template>

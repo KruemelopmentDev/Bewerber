@@ -1,0 +1,381 @@
+<template>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@500;600&display=swap"
+  />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+
+  <style>
+    #root {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      container-type: size;
+      font-family: "Barlow", sans-serif;
+      color: #0e1511;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #root * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Full-bleed Neon Emerald (Broadside Accent register) on a clip layer, never #root */
+    #f07-cta-playstore-bg {
+      position: absolute;
+      inset: 0;
+      background: #28f078;
+    }
+
+    /* Safe-zone stage: strictly inside top 83% (1593px of 1920px) */
+    #f07-cta-playstore-stage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1080px;
+      height: 1593px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 5.5cqw;
+      transform-origin: 50% 48%;
+      will-change: transform;
+    }
+
+    /* Scene 1: Centered hero medallion (icon + 1px dark hairline SVG rings) */
+    #f07-cta-playstore-medallion {
+      position: relative;
+      width: 460px;
+      height: 460px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    #f07-cta-playstore-ring-svg {
+      position: absolute;
+      inset: 0;
+      width: 460px;
+      height: 460px;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    #f07-cta-playstore-ring-outer {
+      fill: none;
+      stroke: #0e1511;
+      stroke-width: 1.5;
+      stroke-linecap: butt;
+    }
+
+    #f07-cta-playstore-ring-inner {
+      fill: none;
+      stroke: rgba(14, 21, 17, 0.32);
+      stroke-width: 1;
+      stroke-linecap: butt;
+    }
+
+    #f07-cta-playstore-icon {
+      position: relative;
+      width: 344px;
+      height: 344px;
+      display: block;
+      object-fit: contain;
+      transform-origin: 50% 50%;
+      will-change: transform, opacity;
+    }
+
+    /* Scene 2: Massive lowercase Barlow 900 wordmark */
+    #f07-cta-playstore-wordmark {
+      margin-top: 72px;
+      font-family: "Barlow", sans-serif;
+      font-weight: 900;
+      font-size: 10.6cqw;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      text-transform: lowercase;
+      color: #0e1511;
+      text-align: center;
+      white-space: nowrap;
+      transform-origin: 50% 50%;
+      will-change: transform, opacity;
+    }
+
+    /* Scene 2: Inverted ink-black CTA bar with fire-orange text (0 radius, flat plane) */
+    #f07-cta-playstore-cta-bar {
+      margin-top: 78px;
+      width: 100%;
+      max-width: 896px;
+      background: #0e1511;
+      border-radius: 0;
+      padding: 36px 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      transform-origin: 50% 50%;
+      will-change: transform, opacity;
+    }
+
+    #f07-cta-playstore-cta-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      will-change: transform, opacity;
+    }
+
+    #f07-cta-playstore-play-mark {
+      width: 24px;
+      height: 28px;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    #f07-cta-playstore-cta-label {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 600;
+      font-size: 2.35cqw;
+      line-height: 1.15;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: #28f078;
+      white-space: nowrap;
+    }
+
+    /* Scene 3: 1px dark hairline rule + mono footer */
+    #f07-cta-playstore-footer {
+      margin-top: 136px;
+      width: 100%;
+      max-width: 896px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #f07-cta-playstore-footer-rule-svg {
+      width: 100%;
+      height: 2px;
+      display: block;
+      overflow: visible;
+    }
+
+    #f07-cta-playstore-footer-rule-line {
+      fill: none;
+      stroke: #0e1511;
+      stroke-width: 1;
+    }
+
+    #f07-cta-playstore-footer-text {
+      margin-top: 28px;
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 1.95cqw;
+      line-height: 1.2;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(14, 21, 17, 0.78);
+      text-align: center;
+      white-space: nowrap;
+      will-change: transform, opacity;
+    }
+  </style>
+
+  <div
+    id="root"
+    data-composition-id="07-cta-playstore"
+    data-start="0"
+    data-duration="5.5"
+    data-width="1080"
+    data-height="1920"
+  >
+    <div
+      id="f07-cta-playstore-bg"
+      class="clip"
+      data-start="0"
+      data-duration="5.5"
+      data-track-index="0"
+    ></div>
+
+    <div
+      id="f07-cta-playstore-stage"
+      class="clip"
+      data-start="0"
+      data-duration="5.5"
+      data-track-index="1"
+    >
+      <div id="f07-cta-playstore-medallion">
+        <svg
+          id="f07-cta-playstore-ring-svg"
+          viewBox="0 0 460 460"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <circle
+            id="f07-cta-playstore-ring-outer"
+            cx="230"
+            cy="230"
+            r="224"
+            transform="rotate(-90 230 230)"
+          />
+          <circle
+            id="f07-cta-playstore-ring-inner"
+            cx="230"
+            cy="230"
+            r="198"
+            transform="rotate(-90 230 230)"
+          />
+        </svg>
+
+        <img
+          id="f07-cta-playstore-icon"
+          src="assets/app-icon.png"
+          alt="Sprücheklopfer App Icon"
+        />
+      </div>
+
+      <h1 id="f07-cta-playstore-wordmark">sprücheklopfer</h1>
+
+      <div id="f07-cta-playstore-cta-bar">
+        <div id="f07-cta-playstore-cta-inner">
+          <svg
+            id="f07-cta-playstore-play-mark"
+            viewBox="0 0 24 28"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <polygon points="2,1 23,14 2,27" fill="#28F078" />
+          </svg>
+          <span id="f07-cta-playstore-cta-label">JETZT KOSTENLOS IM GOOGLE PLAY STORE</span>
+        </div>
+      </div>
+
+      <div id="f07-cta-playstore-footer">
+        <svg
+          id="f07-cta-playstore-footer-rule-svg"
+          viewBox="0 0 896 2"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <line
+            id="f07-cta-playstore-footer-rule-line"
+            x1="0"
+            y1="1"
+            x2="896"
+            y2="1"
+          />
+        </svg>
+        <div id="f07-cta-playstore-footer-text">KRÜMELOPMENT DEV • ANDROID</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const DURATION = 5.5;
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Measure SVG stroke lengths dynamically (svg-path-draw rule)
+      const outerRing = document.getElementById("f07-cta-playstore-ring-outer");
+      const innerRing = document.getElementById("f07-cta-playstore-ring-inner");
+      const footerRule = document.getElementById("f07-cta-playstore-footer-rule-line");
+
+      const outerLen = outerRing ? outerRing.getTotalLength() : 1408;
+      const innerLen = innerRing ? innerRing.getTotalLength() : 1244;
+      const ruleLen = footerRule ? footerRule.getTotalLength() : 896;
+
+      if (outerRing) {
+        outerRing.style.strokeDasharray = `${outerLen}`;
+        outerRing.style.strokeDashoffset = `${outerLen}`;
+      }
+      if (innerRing) {
+        innerRing.style.strokeDasharray = `${innerLen}`;
+        innerRing.style.strokeDashoffset = `${innerLen}`;
+      }
+      if (footerRule) {
+        footerRule.style.strokeDasharray = `${ruleLen}`;
+        footerRule.style.strokeDashoffset = `${ruleLen}`;
+      }
+
+      // Subtle continuous macro settle across the full shot (life-in-the-hold)
+      tl.fromTo(
+        "#f07-cta-playstore-stage",
+        { scale: 0.985 },
+        { scale: 1, duration: DURATION, ease: "none" },
+        0
+      );
+
+      // Scene 1 (0.0–1.6s): Official app-icon spring-pop entrance + 1px dark hairline SVG ring draw
+      tl.fromTo(
+        "#f07-cta-playstore-icon",
+        { scale: 0, opacity: 0, y: 18 },
+        { scale: 1, opacity: 1, y: 0, duration: 0.65, ease: "power3.out" },
+        0.08
+      );
+
+      tl.fromTo(
+        "#f07-cta-playstore-ring-outer",
+        { strokeDashoffset: outerLen },
+        { strokeDashoffset: 0, duration: 0.85, ease: "power2.out" },
+        0.26
+      );
+
+      tl.fromTo(
+        "#f07-cta-playstore-ring-inner",
+        { strokeDashoffset: innerLen },
+        { strokeDashoffset: 0, duration: 0.6, ease: "power2.out" },
+        0.86
+      );
+
+      // Scene 2 (1.6–3.6s): Massive lowercase Barlow 900 wordmark spring-pop + inverted ink-black CTA bar
+      tl.fromTo(
+        "#f07-cta-playstore-wordmark",
+        { scale: 0, opacity: 0, y: 18 },
+        { scale: 1, opacity: 1, y: 0, duration: 0.65, ease: "power3.out" },
+        1.62
+      );
+
+      tl.fromTo(
+        "#f07-cta-playstore-cta-bar",
+        { scale: 0.9, opacity: 0, y: 20 },
+        { scale: 1, opacity: 1, y: 0, duration: 0.65, ease: "power3.out" },
+        2.32
+      );
+
+      tl.fromTo(
+        "#f07-cta-playstore-cta-inner",
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" },
+        2.5
+      );
+
+      // Scene 3 (3.6–5.5s): 1px dark rule self-draw + mono footer settle, then confident held lockup
+      tl.fromTo(
+        "#f07-cta-playstore-footer-rule-line",
+        { strokeDashoffset: ruleLen },
+        { strokeDashoffset: 0, duration: 0.55, ease: "power2.out" },
+        3.62
+      );
+
+      tl.fromTo(
+        "#f07-cta-playstore-footer-text",
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+        3.92
+      );
+
+      // Span anchor to lock full 5.5s duration
+      tl.to({}, { duration: DURATION }, 0);
+
+      window.__timelines["07-cta-playstore"] = tl;
+      tl.seek(0);
+    })();
+  </script>
+</template>

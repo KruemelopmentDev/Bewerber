@@ -1,0 +1,641 @@
+<template>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <style>
+    @font-face {
+      font-family: "Barlow";
+      font-style: normal;
+      font-weight: 900;
+      font-display: block;
+      src: url("https://cdn.jsdelivr.net/fontsource/fonts/barlow@latest/latin-900-normal.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122;
+    }
+    @font-face {
+      font-family: "Barlow";
+      font-style: normal;
+      font-weight: 900;
+      font-display: block;
+      src: url("https://cdn.jsdelivr.net/fontsource/fonts/barlow@latest/latin-ext-900-normal.woff2") format("woff2");
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1EFF;
+    }
+    @font-face {
+      font-family: "IBM Plex Mono";
+      font-style: normal;
+      font-weight: 500;
+      font-display: block;
+      src: url("https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-mono@latest/latin-500-normal.woff2") format("woff2");
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122;
+    }
+    @font-face {
+      font-family: "IBM Plex Mono";
+      font-style: normal;
+      font-weight: 500;
+      font-display: block;
+      src: url("https://cdn.jsdelivr.net/fontsource/fonts/ibm-plex-mono@latest/latin-ext-500-normal.woff2") format("woff2");
+      unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1EFF;
+    }
+
+    #root {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      container-type: size;
+      font-family: "Barlow", sans-serif;
+      color: #dde4dd;
+      box-sizing: border-box;
+    }
+
+    #root * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Full-bleed ground clips (never on #root) */
+    [id="01-hook-pointen-bg-dark"],
+    [id="01-hook-pointen-bg-orange"] {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    [id="01-hook-pointen-bg-dark"] {
+      background: #0e1511;
+    }
+
+    [id="01-hook-pointen-bg-orange"] {
+      background: #28f078;
+      opacity: 0;
+    }
+
+    /* Content safe-zone shell: strictly inside top 83% (1593px) */
+    [id="01-hook-pointen-stage"] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1080px;
+      height: 1560px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 64px 60px 48px 60px;
+    }
+
+    /* Top chrome bar (1px hairline + mono kicker) */
+    [id="01-hook-pointen-topbar"] {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 22px;
+      border-bottom: 1px solid #262827;
+    }
+
+    [id="01-hook-pointen-kicker"],
+    [id="01-hook-pointen-counter"] {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 24px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    [id="01-hook-pointen-kicker"] {
+      color: #28f078;
+    }
+
+    [id="01-hook-pointen-counter"] {
+      color: #dde4dd;
+      opacity: 0.72;
+    }
+
+    /* Center hero zone: dice-tap pill anchored above massive slogan slot */
+    [id="01-hook-pointen-hero"] {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 64px;
+      width: 100%;
+      padding-top: 24px;
+      padding-bottom: 48px;
+    }
+
+    /* Compact neon-emerald dice-tap pill (Broadside flat sharp rectangle, 0 radius) */
+    [id="01-hook-pointen-dice-wrap"] {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    [id="01-hook-pointen-dice-pill"] {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      padding: 20px 36px;
+      background: #28f078;
+      color: #0e1511;
+      border: 1px solid #28f078;
+      border-radius: 0;
+    }
+
+    [id="01-hook-pointen-dice-icon"] {
+      width: 34px;
+      height: 34px;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    [id="01-hook-pointen-dice-label"] {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 26px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      line-height: 1;
+      color: inherit;
+    }
+
+    /* Slogan stage: all 3 scenes stacked in one centered slot */
+    [id="01-hook-pointen-slogan-slot"] {
+      position: relative;
+      width: 100%;
+      height: 760px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    [id="01-hook-pointen-scene-1"],
+    [id="01-hook-pointen-scene-2"],
+    [id="01-hook-pointen-scene-3"] {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: 100%;
+    }
+
+    [id="01-hook-pointen-scene-2"],
+    [id="01-hook-pointen-scene-3"] {
+      opacity: 0;
+    }
+
+    /* Massive lowercase Barlow 900 display lines */
+    [data-f01-line] {
+      font-family: "Barlow", sans-serif;
+      font-weight: 900;
+      text-transform: lowercase;
+      letter-spacing: -0.04em;
+      line-height: 0.9;
+      white-space: nowrap;
+    }
+
+    /* Scene 1: "20 % auf alles außer feierabend." */
+    [id="01-hook-pointen-s1-l1"],
+    [id="01-hook-pointen-s1-l2"],
+    [id="01-hook-pointen-s1-l3"] {
+      font-size: 112px;
+      color: #dde4dd;
+    }
+
+    [id="01-hook-pointen-s1-l3"] {
+      font-size: 132px;
+    }
+
+    /* Scene 2: discrete-text-sequence slot */
+    [id="01-hook-pointen-s2-wrap"] {
+      min-width: 920px;
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    [id="01-hook-pointen-s2-l1"] {
+      font-size: 112px;
+      color: #dde4dd;
+      min-height: 108px;
+    }
+
+    [id="01-hook-pointen-s2-l2"] {
+      font-size: 168px;
+      color: #28f078;
+      min-height: 156px;
+    }
+
+    [id="01-hook-pointen-s2-l3"] {
+      font-size: 92px;
+      color: #dde4dd;
+      min-height: 92px;
+    }
+
+    /* Scene 3: orange register ("quadratisch. praktisch. käse.") */
+    [id="01-hook-pointen-s3-l1"],
+    [id="01-hook-pointen-s3-l2"] {
+      font-size: 138px;
+      color: #0e1511;
+      line-height: 0.88;
+    }
+
+    [id="01-hook-pointen-s3-l3"] {
+      font-size: 184px;
+      color: #0e1511;
+      line-height: 0.88;
+    }
+
+    /* Broadside 36x2px stub accent bar (scaled for 1080 portrait) */
+    [id="01-hook-pointen-rule-stub"] {
+      width: 64px;
+      height: 3px;
+      background: #28f078;
+      margin-top: 44px;
+    }
+
+    /* Bottom rhythm chrome inside safe zone */
+    [id="01-hook-pointen-footer"] {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 22px;
+      border-top: 1px solid #262827;
+    }
+
+    [id="01-hook-pointen-beat-tag"] {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #48504b;
+    }
+
+    [id="01-hook-pointen-metronome"] {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    [data-f01-tick] {
+      width: 36px;
+      height: 6px;
+      background: #28f078;
+      opacity: 0.22;
+    }
+  </style>
+
+  <div
+    id="root"
+    data-composition-id="01-hook-pointen"
+    data-start="0"
+    data-duration="5.9"
+    data-width="1080"
+    data-height="1920"
+  >
+    <!-- Track 0: Dark register ground -->
+    <div
+      id="01-hook-pointen-bg-dark"
+      class="clip"
+      data-start="0"
+      data-duration="5.9"
+      data-track-index="0"
+    ></div>
+
+    <!-- Track 1: Fire-orange (#28F078) register ground for Scene 3 flip -->
+    <div
+      id="01-hook-pointen-bg-orange"
+      class="clip"
+      data-start="0"
+      data-duration="5.9"
+      data-track-index="1"
+    ></div>
+
+    <!-- Track 2: Foreground typography + chrome stage -->
+    <div
+      id="01-hook-pointen-stage"
+      class="clip"
+      data-start="0"
+      data-duration="5.9"
+      data-track-index="2"
+    >
+      <!-- Top hairline + mono kicker -->
+      <div id="01-hook-pointen-topbar">
+        <span id="01-hook-pointen-kicker">01 / POINTEN-MASCHINE</span>
+        <span id="01-hook-pointen-counter">01 / 03</span>
+      </div>
+
+      <!-- Center hero: dice-tap pill + massive slogan slot -->
+      <div id="01-hook-pointen-hero">
+        <div id="01-hook-pointen-dice-wrap">
+          <div id="01-hook-pointen-dice-pill">
+            <svg
+              id="01-hook-pointen-dice-icon"
+              viewBox="0 0 36 36"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <rect
+                x="2"
+                y="2"
+                width="32"
+                height="32"
+                stroke="currentColor"
+                stroke-width="3"
+              />
+              <rect x="9" y="9" width="5" height="5" fill="currentColor" />
+              <rect x="22" y="9" width="5" height="5" fill="currentColor" />
+              <rect x="15.5" y="15.5" width="5" height="5" fill="currentColor" />
+              <rect x="9" y="22" width="5" height="5" fill="currentColor" />
+              <rect x="22" y="22" width="5" height="5" fill="currentColor" />
+            </svg>
+            <span id="01-hook-pointen-dice-label">WÜRFELN</span>
+          </div>
+        </div>
+
+        <div id="01-hook-pointen-slogan-slot">
+          <!-- Scene 1 (0.0-1.5s): kinetic beat-slam -->
+          <div id="01-hook-pointen-scene-1">
+            <div id="01-hook-pointen-s1-l1" data-f01-line>20 % auf alles</div>
+            <div id="01-hook-pointen-s1-l2" data-f01-line>außer</div>
+            <div id="01-hook-pointen-s1-l3" data-f01-line>feierabend.</div>
+          </div>
+
+          <!-- Scene 2 (1.5-3.3s): discrete-text-sequence flash word-swap -->
+          <div id="01-hook-pointen-scene-2">
+            <div id="01-hook-pointen-s2-wrap">
+              <div id="01-hook-pointen-s2-l1" data-f01-line></div>
+              <div id="01-hook-pointen-s2-l2" data-f01-line></div>
+              <div id="01-hook-pointen-s2-l3" data-f01-line></div>
+            </div>
+          </div>
+
+          <!-- Scene 3 (3.3-5.5s): orange register kinetic beat-slam -->
+          <div id="01-hook-pointen-scene-3">
+            <div id="01-hook-pointen-s3-l1" data-f01-line>quadratisch.</div>
+            <div id="01-hook-pointen-s3-l2" data-f01-line>praktisch.</div>
+            <div id="01-hook-pointen-s3-l3" data-f01-line>käse.</div>
+            <div id="01-hook-pointen-rule-stub"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom rhythm chrome (above 83% keep-out) -->
+      <div id="01-hook-pointen-footer">
+        <span id="01-hook-pointen-beat-tag">POINTE 01</span>
+        <div id="01-hook-pointen-metronome" aria-hidden="true">
+          <div id="01-hook-pointen-tick-1" data-f01-tick></div>
+          <div id="01-hook-pointen-tick-2" data-f01-tick></div>
+          <div id="01-hook-pointen-tick-3" data-f01-tick></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const DURATION = 5.5;
+      // Single tempo grid driving every beat, dice tap, and rhythm tick
+      const BEATS = [0.06, 1.5, 3.3];
+
+      const bgOrange = document.getElementById("01-hook-pointen-bg-orange");
+      const topbar = document.getElementById("01-hook-pointen-topbar");
+      const kicker = document.getElementById("01-hook-pointen-kicker");
+      const counter = document.getElementById("01-hook-pointen-counter");
+      const dicePill = document.getElementById("01-hook-pointen-dice-pill");
+      const diceIcon = document.getElementById("01-hook-pointen-dice-icon");
+      const footer = document.getElementById("01-hook-pointen-footer");
+      const beatTag = document.getElementById("01-hook-pointen-beat-tag");
+      const ruleStub = document.getElementById("01-hook-pointen-rule-stub");
+
+      const scene1 = document.getElementById("01-hook-pointen-scene-1");
+      const s1L1 = document.getElementById("01-hook-pointen-s1-l1");
+      const s1L2 = document.getElementById("01-hook-pointen-s1-l2");
+      const s1L3 = document.getElementById("01-hook-pointen-s1-l3");
+
+      const scene2 = document.getElementById("01-hook-pointen-scene-2");
+      const s2L1 = document.getElementById("01-hook-pointen-s2-l1");
+      const s2L2 = document.getElementById("01-hook-pointen-s2-l2");
+      const s2L3 = document.getElementById("01-hook-pointen-s2-l3");
+
+      const scene3 = document.getElementById("01-hook-pointen-scene-3");
+      const s3L1 = document.getElementById("01-hook-pointen-s3-l1");
+      const s3L2 = document.getElementById("01-hook-pointen-s3-l2");
+      const s3L3 = document.getElementById("01-hook-pointen-s3-l3");
+
+      const ticks = [
+        document.getElementById("01-hook-pointen-tick-1"),
+        document.getElementById("01-hook-pointen-tick-2"),
+        document.getElementById("01-hook-pointen-tick-3"),
+      ];
+
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // Full-span anchor
+      tl.to({}, { duration: DURATION }, 0);
+
+      // ------------------------------------------------------------------
+      // SCENE 1 (0.0 - 1.5s): Dark register + dice tap 1 + kinetic beat-slam
+      // ------------------------------------------------------------------
+      tl.set(bgOrange, { opacity: 0 }, 0);
+      tl.set(scene1, { opacity: 1 }, 0);
+      tl.set(scene2, { opacity: 0 }, 0);
+      tl.set(scene3, { opacity: 0 }, 0);
+      tl.set(topbar, { borderBottomColor: "#262827" }, 0);
+      tl.set(footer, { borderTopColor: "#262827" }, 0);
+      tl.set(kicker, { color: "#28F078" }, 0);
+      tl.set(counter, { color: "#DDE4DD", opacity: 0.72 }, 0);
+      tl.set(beatTag, { color: "#48504B" }, 0);
+      tl.set(
+        dicePill,
+        { backgroundColor: "#28F078", color: "#0E1511", borderColor: "#28F078" },
+        0
+      );
+      tl.set(ticks, { backgroundColor: "#28F078", opacity: 0.22 }, 0);
+      tl.set(ruleStub, { backgroundColor: "#28F078" }, 0);
+
+      // Dice tap 1: compress -> spring release + die snap-rotate
+      tl.fromTo(
+        dicePill,
+        { scale: 1, y: 0 },
+        { scale: 0.9, y: 8, duration: 0.06, ease: "power2.in" },
+        0
+      );
+      tl.fromTo(
+        dicePill,
+        { scale: 0.9, y: 8 },
+        { scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)" },
+        BEATS[0]
+      );
+      tl.fromTo(
+        diceIcon,
+        { rotation: -90 },
+        { rotation: 0, duration: 0.26, ease: "expo.out" },
+        BEATS[0]
+      );
+
+      // Distinct per-line kinetic beat-slam entrances (3 axes, 3 easings)
+      tl.fromTo(
+        s1L1,
+        { scale: 1.45, filter: "blur(14px)", opacity: 0 },
+        { scale: 1, filter: "blur(0px)", opacity: 1, duration: 0.36, ease: "power4.out" },
+        BEATS[0] + 0.02
+      );
+      tl.fromTo(
+        s1L2,
+        { x: -240, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.32, ease: "expo.out" },
+        BEATS[0] + 0.16
+      );
+      tl.fromTo(
+        s1L3,
+        { y: 84, rotation: 3.5, opacity: 0 },
+        { y: 0, rotation: 0, opacity: 1, duration: 0.38, ease: "circ.out" },
+        BEATS[0] + 0.3
+      );
+
+      // Tick 1 active on Beat 0
+      tl.set(ticks[0], { opacity: 1 }, BEATS[0]);
+
+      // ------------------------------------------------------------------
+      // SCENE 2 (1.5 - 3.3s): Dice tap 2 + discrete-text-sequence word-swap
+      // ------------------------------------------------------------------
+      // Pre-tap compression right before Beat 1, spring release on Beat 1
+      tl.to(dicePill, { scale: 0.88, y: 8, duration: 0.08, ease: "power2.in" }, BEATS[1] - 0.08);
+      tl.to(dicePill, { scale: 1, y: 0, duration: 0.24, ease: "back.out(2.2)" }, BEATS[1]);
+      tl.fromTo(
+        diceIcon,
+        { rotation: 0 },
+        { rotation: 90, duration: 0.24, ease: "expo.out" },
+        BEATS[1]
+      );
+
+      // Instant hard-cut swap from Scene 1 to Scene 2
+      tl.set(scene1, { opacity: 0 }, BEATS[1]);
+      tl.set(scene2, { opacity: 1 }, BEATS[1]);
+      tl.set(ticks[1], { opacity: 1 }, BEATS[1]);
+
+      // Discrete text sequence (reverse-search at frame thresholds, instant jumps)
+      const SEQUENCE = [
+        { t: 0.0, l1: "", l2: "", l3: "", counter: "01 / 03", tag: "POINTE 01" },
+        { t: 1.5, l1: "duschen ohne", l2: "—", l3: "", counter: "02 / 03", tag: "POINTE 02" },
+        { t: 1.66, l1: "duschen ohne", l2: "döner", l3: "", counter: "02 / 03", tag: "POINTE 02" },
+        {
+          t: 1.84,
+          l1: "duschen ohne",
+          l2: "döner",
+          l3: "macht keinen spaß.",
+          counter: "02 / 03",
+          tag: "POINTE 02",
+        },
+        { t: 3.3, l1: "", l2: "", l3: "", counter: "03 / 03", tag: "POINTE 03" },
+      ];
+
+      function stateAt(time) {
+        for (let i = SEQUENCE.length - 1; i >= 0; i--) {
+          if (time >= SEQUENCE[i].t) return SEQUENCE[i];
+        }
+        return SEQUENCE[0];
+      }
+
+      const seqDriver = { t: 0 };
+      tl.to(
+        seqDriver,
+        {
+          t: DURATION,
+          duration: DURATION,
+          ease: "none",
+          onUpdate: () => {
+            const st = stateAt(seqDriver.t);
+            s2L1.textContent = st.l1;
+            s2L2.textContent = st.l2;
+            s2L3.textContent = st.l3;
+            counter.textContent = st.counter;
+            beatTag.textContent = st.tag;
+          },
+        },
+        0
+      );
+
+      // Subtle completion pulse on the highlighted word "döner" when full line locks
+      tl.fromTo(
+        s2L2,
+        { scale: 1.08 },
+        { scale: 1, duration: 0.22, ease: "power3.out" },
+        1.84
+      );
+
+      // ------------------------------------------------------------------
+      // SCENE 3 (3.3 - 5.5s): Dice tap 3 + orange register flip + kinetic beat-slam
+      //                        + clean still hold for final 0.8s (4.7 - 5.5s)
+      // ------------------------------------------------------------------
+      tl.to(dicePill, { scale: 0.88, y: 8, duration: 0.08, ease: "power2.in" }, BEATS[2] - 0.08);
+      tl.to(dicePill, { scale: 1, y: 0, duration: 0.24, ease: "back.out(2.2)" }, BEATS[2]);
+      tl.fromTo(
+        diceIcon,
+        { rotation: 90 },
+        { rotation: 180, duration: 0.24, ease: "expo.out" },
+        BEATS[2]
+      );
+
+      // Hard-flip to fire-orange (#28F078) register with ink-black (#0E1511) chrome
+      tl.set(bgOrange, { opacity: 1 }, BEATS[2]);
+      tl.set(scene2, { opacity: 0 }, BEATS[2]);
+      tl.set(scene3, { opacity: 1 }, BEATS[2]);
+      tl.set(topbar, { borderBottomColor: "rgba(17,17,17,0.20)" }, BEATS[2]);
+      tl.set(footer, { borderTopColor: "rgba(17,17,17,0.20)" }, BEATS[2]);
+      tl.set(kicker, { color: "rgba(17,17,17,0.55)" }, BEATS[2]);
+      tl.set(counter, { color: "#0E1511", opacity: 0.75 }, BEATS[2]);
+      tl.set(beatTag, { color: "rgba(17,17,17,0.55)" }, BEATS[2]);
+      tl.set(
+        dicePill,
+        { backgroundColor: "#0E1511", color: "#28F078", borderColor: "#0E1511" },
+        BEATS[2]
+      );
+      tl.set(ticks, { backgroundColor: "#0E1511" }, BEATS[2]);
+      tl.set(ticks[2], { opacity: 1 }, BEATS[2]);
+      tl.set(ruleStub, { backgroundColor: "#0E1511" }, BEATS[2]);
+
+      // Stacked massive display "quadratisch. praktisch. käse." via kinetic beat-slam
+      // Fully settled by 4.55s so poster (4.5s) and final 0.8s (4.7-5.5s) hold clean & still
+      tl.fromTo(
+        s3L1,
+        { scale: 1.48, filter: "blur(16px)", opacity: 0 },
+        { scale: 1, filter: "blur(0px)", opacity: 1, duration: 0.36, ease: "power4.out" },
+        BEATS[2] + 0.02
+      );
+      tl.fromTo(
+        s3L2,
+        { x: 260, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.34, ease: "expo.out" },
+        BEATS[2] + 0.36
+      );
+      tl.fromTo(
+        s3L3,
+        { y: 100, rotation: -3.5, opacity: 0 },
+        { y: 0, rotation: 0, opacity: 1, duration: 0.42, ease: "circ.out" },
+        BEATS[2] + 0.72
+      );
+      tl.fromTo(
+        ruleStub,
+        { scaleX: 0, opacity: 0 },
+        { scaleX: 1, opacity: 1, duration: 0.24, ease: "power3.out" },
+        BEATS[2] + 1.12
+      );
+
+      window.__timelines["01-hook-pointen"] = tl;
+      tl.seek(0);
+    })();
+  </script>
+</template>

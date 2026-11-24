@@ -1,0 +1,160 @@
+{
+  "tts_provider": null,
+  "voice_id": null,
+  "bgm": null,
+  "bgm_pending": false,
+  "bgm_provider": null,
+  "bgm_pid": null,
+  "bgm_log": null,
+  "bgm_mode": null,
+  "bgm_target_duration_s": null,
+  "bgm_seed_duration_s": null,
+  "bgm_loop_count": null,
+  "voices": [],
+  "sfx": [
+    {
+      "id": "01",
+      "name": "click-pop",
+      "file": "assets/sfx/click-pop.mp3",
+      "source": "openverse",
+      "duration_s": 0.5,
+      "license": "cc0",
+      "credit": "\"Click Pop - two part\" by GameAudio is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/.",
+      "offset_s": 0,
+      "volume": 0.35
+    },
+    {
+      "id": "01",
+      "name": "impact-soft",
+      "file": "assets/sfx/impact-soft.mp3",
+      "source": "openverse",
+      "duration_s": 4.45,
+      "license": "cc0",
+      "credit": "\"Oven Mitt Impact\" by Zott820 is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/.",
+      "offset_s": 0,
+      "volume": 0.35
+    },
+    {
+      "id": "02",
+      "name": "whoosh",
+      "file": "assets/sfx/whoosh.mp3",
+      "source": "openverse",
+      "duration_s": 3.155,
+      "license": "cc0",
+      "credit": "\"Deep Whoosh #1\" by Kinoton is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/.",
+      "offset_s": 0,
+      "volume": 0.35
+    },
+    {
+      "id": "02",
+      "name": "click-pop",
+      "file": "assets/sfx/click-pop.mp3",
+      "source": "openverse",
+      "duration_s": 0.5,
+      "license": "cc0",
+      "credit": "\"Click Pop - two part\" by GameAudio is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/.",
+      "offset_s": 0,
+      "volume": 0.35
+    },
+    {
+      "id": "03",
+      "name": "riser",
+      "file": "assets/sfx/riser.mp3",
+      "source": "openverse",
+      "duration_s": 2,
+      "license": "cc0",
+      "credit": "\"Riser\" by Rizzard is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/.",
+      "offset_s": 0,
+      "volume": 0.35
+    },
+    {
+      "id": "03",
+      "name": "impact-soft",
+      "file": "assets/sfx/impact-soft.mp3",
+      "source": "openverse",
+      "duration_s": 4.45,
+      "license": "cc0",
+      "credit": "\"Oven Mitt Impact\" by Zott820 is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/.",
+      "offset_s": 0,
+      "volume": 0.35
+    },
+    {
+      "id": "04",
+      "name": "whoosh",
+      "file": "assets/sfx/whoosh.mp3",
+      "source": "openverse",
+      "duration_s": 3.155,
+      "license": "cc0",
+      "credit": "\"Deep Whoosh #1\" by Kinoton is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/.",
+      "offset_s": 0,
+      "volume": 0.35
+    },
+    {
+      "id": "04",
+      "name": "chime",
+      "file": "assets/sfx/chime.mp3",
+      "source": "openverse",
+      "duration_s": 0.323,
+      "license": "cc0",
+      "credit": "\"Chime Notification\" by Jofae is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/.",
+      "offset_s": 0,
+      "volume": 0.35
+    },
+    {
+      "id": "05",
+      "name": "click-pop",
+      "file": "assets/sfx/click-pop.mp3",
+      "source": "openverse",
+      "duration_s": 0.5,
+      "license": "cc0",
+      "credit": "\"Click Pop - two part\" by GameAudio is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/.",
+      "offset_s": 0,
+      "volume": 0.35
+    },
+    {
+      "id": "05",
+      "name": "whoosh",
+      "file": "assets/sfx/whoosh.mp3",
+      "source": "openverse",
+      "duration_s": 3.155,
+      "license": "cc0",
+      "credit": "\"Deep Whoosh #1\" by Kinoton is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/.",
+      "offset_s": 0,
+      "volume": 0.35
+    },
+    {
+      "id": "06",
+      "name": "chime",
+      "file": "assets/sfx/chime.mp3",
+      "source": "openverse",
+      "duration_s": 0.323,
+      "license": "cc0",
+      "credit": "\"Chime Notification\" by Jofae is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/.",
+      "offset_s": 0,
+      "volume": 0.35
+    },
+    {
+      "id": "07",
+      "name": "impact-soft",
+      "file": "assets/sfx/impact-soft.mp3",
+      "source": "openverse",
+      "duration_s": 4.45,
+      "license": "cc0",
+      "credit": "\"Oven Mitt Impact\" by Zott820 is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/.",
+      "offset_s": 0,
+      "volume": 0.35
+    },
+    {
+      "id": "07",
+      "name": "chime",
+      "file": "assets/sfx/chime.mp3",
+      "source": "openverse",
+      "duration_s": 0.323,
+      "license": "cc0",
+      "credit": "\"Chime Notification\" by Jofae is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/.",
+      "offset_s": 0,
+      "volume": 0.35
+    }
+  ],
+  "total_duration_s": 0
+}

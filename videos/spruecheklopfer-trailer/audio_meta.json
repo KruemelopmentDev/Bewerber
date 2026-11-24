@@ -1,0 +1,127 @@
+{
+  "bgm": {
+    "path": "assets/bgm-pointen-maschine.mp3",
+    "source": "host"
+  },
+  "bgm_pending": false,
+  "voices": [],
+  "sfx": [
+    {
+      "frame": 1,
+      "file": "assets/sfx/click-pop.mp3",
+      "offset_s": 0,
+      "duration_s": 0.5,
+      "volume": 0.35,
+      "license": "cc0",
+      "credit": "\"Click Pop - two part\" by GameAudio is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+    },
+    {
+      "frame": 1,
+      "file": "assets/sfx/impact-soft.mp3",
+      "offset_s": 0,
+      "duration_s": 4.45,
+      "volume": 0.35,
+      "license": "cc0",
+      "credit": "\"Oven Mitt Impact\" by Zott820 is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+    },
+    {
+      "frame": 2,
+      "file": "assets/sfx/whoosh.mp3",
+      "offset_s": 0,
+      "duration_s": 3.155,
+      "volume": 0.35,
+      "license": "cc0",
+      "credit": "\"Deep Whoosh #1\" by Kinoton is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+    },
+    {
+      "frame": 2,
+      "file": "assets/sfx/click-pop.mp3",
+      "offset_s": 0,
+      "duration_s": 0.5,
+      "volume": 0.35,
+      "license": "cc0",
+      "credit": "\"Click Pop - two part\" by GameAudio is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/riser.mp3",
+      "offset_s": 0,
+      "duration_s": 2,
+      "volume": 0.35,
+      "license": "cc0",
+      "credit": "\"Riser\" by Rizzard is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/impact-soft.mp3",
+      "offset_s": 0,
+      "duration_s": 4.45,
+      "volume": 0.35,
+      "license": "cc0",
+      "credit": "\"Oven Mitt Impact\" by Zott820 is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/whoosh.mp3",
+      "offset_s": 0,
+      "duration_s": 3.155,
+      "volume": 0.35,
+      "license": "cc0",
+      "credit": "\"Deep Whoosh #1\" by Kinoton is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/chime.mp3",
+      "offset_s": 0,
+      "duration_s": 0.323,
+      "volume": 0.35,
+      "license": "cc0",
+      "credit": "\"Chime Notification\" by Jofae is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+    },
+    {
+      "frame": 5,
+      "file": "assets/sfx/click-pop.mp3",
+      "offset_s": 0,
+      "duration_s": 0.5,
+      "volume": 0.35,
+      "license": "cc0",
+      "credit": "\"Click Pop - two part\" by GameAudio is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+    },
+    {
+      "frame": 5,
+      "file": "assets/sfx/whoosh.mp3",
+      "offset_s": 0,
+      "duration_s": 3.155,
+      "volume": 0.35,
+      "license": "cc0",
+      "credit": "\"Deep Whoosh #1\" by Kinoton is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+    },
+    {
+      "frame": 6,
+      "file": "assets/sfx/chime.mp3",
+      "offset_s": 0,
+      "duration_s": 0.323,
+      "volume": 0.35,
+      "license": "cc0",
+      "credit": "\"Chime Notification\" by Jofae is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+    },
+    {
+      "frame": 7,
+      "file": "assets/sfx/impact-soft.mp3",
+      "offset_s": 0,
+      "duration_s": 4.45,
+      "volume": 0.35,
+      "license": "cc0",
+      "credit": "\"Oven Mitt Impact\" by Zott820 is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+    },
+    {
+      "frame": 7,
+      "file": "assets/sfx/chime.mp3",
+      "offset_s": 0,
+      "duration_s": 0.323,
+      "volume": 0.35,
+      "license": "cc0",
+      "credit": "\"Chime Notification\" by Jofae is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+    }
+  ]
+}
